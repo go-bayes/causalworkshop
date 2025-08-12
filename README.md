@@ -59,14 +59,22 @@ devtools::install_github("go-bayes/causalworkshop")
 
 ### Method 2: Using the SPARCC Day 2 Workshop Helper
 
-If you're taking the SPARCC Day 2 workshop, you can use the convenient installer:
+If you're taking the SPARCC Day 2 workshop, you can use the convenient installer script provided during the workshop, or install manually:
 
 ```r
-# Install all workshop dependencies with one command
-source("https://raw.githubusercontent.com/go-bayes/sparcc-day-2/main/install-packages.R")
+# Manual installation for SPARCC Day 2
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+
+# Install causalworkshop (includes all scripts)
+devtools::install_github("go-bayes/causalworkshop")
+
+# Install margot for advanced workflows
+devtools::install_github("go-bayes/margot")
 ```
 
-This will automatically install `causalworkshop` along with all required dependencies for the complete workshop experience.
+This will install `causalworkshop` along with all required dependencies for the complete workshop experience.
 
 ### Method 3: Development Installation
 
