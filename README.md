@@ -6,7 +6,7 @@
 
 ## Educational Package for Causal Inference with Machine Learning
 
-`causalworkshop` provides comprehensive educational tools for learning causal inference using machine learning methods, particularly causal forests. The package combines theoretical foundations with hands-on analysis workflows, making complex causal inference concepts accessible to students and researchers.
+`causalworkshop` provides tools for learning causal inference using machine learning methods, here, causal forests. 
 
 
 ## Installation
@@ -19,7 +19,7 @@
   - Git (for development)
   - C++ compiler (usually handled automatically by R)
 
-### Method 1: Direct Installation (Recommended)
+### Installation (Recommended)
 
 ```r
 # install devtools if not already installed
@@ -31,21 +31,12 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 devtools::install_github("go-bayes/causalworkshop")
 ```
 
-### Method 2: Using the SPARCC Day 2 Workshop Helper
-
-Optionally install `margot`
+###  Optionally install `margot`
 
 ```r
-# Manual installation for SPARCC Day 2
-if (!requireNamespace("devtools", quietly = TRUE)) {
-  install.packages("devtools")
-}
-
-# Install causalworkshop (includes all scripts)
-devtools::install_github("go-bayes/causalworkshop")
 
 # install margot for advanced workflows OPTIONAL
-# warning, this package is being refactored: for demonstration purposes only.
+# warning, this package is being refactored: for demonstration purposes in the SPARCC DAY 2 Workshop
 devtools::install_github("go-bayes/margot")
 ```
 
@@ -173,48 +164,9 @@ plots <- plot_rate_qini_curves(cf_results$predictions)
 plots$efficiency_data  # Targeting efficiency metrics
 ```
 
-## Educational Philosophy
 
-This package follows established pedagogical principles:
+Implementations follow the standards established by the [Generalized Random Forests](https://grf-labs.github.io/) development team.
 
-- **Learning by Doing**: Hands-on analysis with real code
-- **Conceptual Understanding**: Clear explanations of methodology
-- **Professional Standards**: Publication-quality implementations
-- **Reproducible Research**: Consistent, documented workflows
-
-## Methodology
-
-The package implements methods from leading causal inference research:
-
-- **Causal Forests**: Wager & Athey (2018) *Journal of the American Statistical Association*
-- **Targeting Analysis**: Kitagawa & Tetenov (2018) *Econometrica*
-- **Policy Learning**: Athey & Wager (2021) *Econometrica*
-
-All implementations follow the standards established by the [Generalized Random Forests](https://grf-labs.github.io/) development team.
-
-## Use Cases
-
-### For Students
-- Graduate courses in causal inference
-- Applied econometrics workshops  
-- Machine learning for social science
-- Research methodology training
-
-### For Researchers
-- Pilot studies and method exploration
-- Teaching and workshop materials
-- Reproducible research workflows
-- Methodological benchmarking
-
-### For Instructors
-- Complete course materials
-- Customizable workshop modules
-- Assessment and exercise frameworks
-- Professional visualization tools
-
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## Citation
 

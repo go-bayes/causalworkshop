@@ -359,11 +359,8 @@ display: none;
 <p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img role="img" aria-label="Lifecycle: experimental" src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMzgiIGhlaWdodD0iMjAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0ibGlmZWN5Y2xlOiBleHBlcmltZW50YWwiPjx0aXRsZT5saWZlY3ljbGU6IGV4cGVyaW1lbnRhbDwvdGl0bGU+PGxpbmVhckdyYWRpZW50IGlkPSJzIiB4Mj0iMCIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2JiYiIgc3RvcC1vcGFjaXR5PSIuMSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIuMSIvPjwvbGluZWFyR3JhZGllbnQ+PGNsaXBQYXRoIGlkPSJyIj48cmVjdCB3aWR0aD0iMTM4IiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iI2ZmZiIvPjwvY2xpcFBhdGg+PGcgY2xpcC1wYXRoPSJ1cmwoI3IpIj48cmVjdCB3aWR0aD0iNTUiIGhlaWdodD0iMjAiIGZpbGw9IiM1NTUiLz48cmVjdCB4PSI1NSIgd2lkdGg9IjgzIiBoZWlnaHQ9IjIwIiBmaWxsPSIjZmU3ZDM3Ii8+PHJlY3Qgd2lkdGg9IjEzOCIgaGVpZ2h0PSIyMCIgZmlsbD0idXJsKCNzKSIvPjwvZz48ZyBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iVmVyZGFuYSxHZW5ldmEsRGVqYVZ1IFNhbnMsc2Fucy1zZXJpZiIgdGV4dC1yZW5kZXJpbmc9Imdlb21ldHJpY1ByZWNpc2lvbiIgZm9udC1zaXplPSIxMTAiPjx0ZXh0IGFyaWEtaGlkZGVuPSJ0cnVlIiB4PSIyODUiIHk9IjE1MCIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHRleHRMZW5ndGg9IjQ1MCI+bGlmZWN5Y2xlPC90ZXh0Pjx0ZXh0IHg9IjI4NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgZmlsbD0iI2ZmZiIgdGV4dExlbmd0aD0iNDUwIj5saWZlY3ljbGU8L3RleHQ+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9Ijk1NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNzMwIj5leHBlcmltZW50YWw8L3RleHQ+PHRleHQgeD0iOTU1IiB5PSIxNDAiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiBmaWxsPSIjZmZmIiB0ZXh0TGVuZ3RoPSI3MzAiPmV4cGVyaW1lbnRhbDwvdGV4dD48L2c+PC9zdmc+" alt="Lifecycle: experimental" /></a> <!-- badges: end --></p>
 <div id="educational-package-for-causal-inference-with-machine-learning" class="section level2">
 <h2>Educational Package for Causal Inference with Machine Learning</h2>
-<p><code>causalworkshop</code> provides comprehensive educational tools
-for learning causal inference using machine learning methods,
-particularly causal forests. The package combines theoretical
-foundations with hands-on analysis workflows, making complex causal
-inference concepts accessible to students and researchers.</p>
+<p><code>causalworkshop</code> provides tools for learning causal
+inference using machine learning methods, here, causal forests.</p>
 </div>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
@@ -379,8 +376,8 @@ inference concepts accessible to students and researchers.</p>
 </ul></li>
 </ul>
 </div>
-<div id="method-1-direct-installation-recommended" class="section level3">
-<h3>Method 1: Direct Installation (Recommended)</h3>
+<div id="installation-recommended" class="section level3">
+<h3>Installation (Recommended)</h3>
 <pre class="r"><code># install devtools if not already installed
 if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE)) {
   install.packages(&quot;devtools&quot;)
@@ -389,19 +386,11 @@ if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE)) {
 # install causalworkshop from GitHub
 devtools::install_github(&quot;go-bayes/causalworkshop&quot;)</code></pre>
 </div>
-<div id="method-2-using-the-sparcc-day-2-workshop-helper" class="section level3">
-<h3>Method 2: Using the SPARCC Day 2 Workshop Helper</h3>
-<p>Optionally install <code>margot</code></p>
-<pre class="r"><code># Manual installation for SPARCC Day 2
-if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE)) {
-  install.packages(&quot;devtools&quot;)
-}
-
-# Install causalworkshop (includes all scripts)
-devtools::install_github(&quot;go-bayes/causalworkshop&quot;)
-
+<div id="optionally-install-margot" class="section level3">
+<h3>Optionally install <code>margot</code></h3>
+<pre class="r"><code>
 # install margot for advanced workflows OPTIONAL
-# warning, this package is being refactored: for demonstration purposes only.
+# warning, this package is being refactored: for demonstration purposes in the SPARCC DAY 2 Workshop
 devtools::install_github(&quot;go-bayes/margot&quot;)</code></pre>
 <p>This will install <code>causalworkshop</code> along with all required
 dependencies for the complete workshop experience.</p>
@@ -521,71 +510,9 @@ targeting decisions.</p>
 <pre class="r"><code># Evaluates targeting performance
 plots &lt;- plot_rate_qini_curves(cf_results$predictions)
 plots$efficiency_data  # Targeting efficiency metrics</code></pre>
-</div>
-</div>
-<div id="educational-philosophy" class="section level2">
-<h2>Educational Philosophy</h2>
-<p>This package follows established pedagogical principles:</p>
-<ul>
-<li><strong>Learning by Doing</strong>: Hands-on analysis with real
-code</li>
-<li><strong>Conceptual Understanding</strong>: Clear explanations of
-methodology</li>
-<li><strong>Professional Standards</strong>: Publication-quality
-implementations</li>
-<li><strong>Reproducible Research</strong>: Consistent, documented
-workflows</li>
-</ul>
-</div>
-<div id="methodology" class="section level2">
-<h2>Methodology</h2>
-<p>The package implements methods from leading causal inference
-research:</p>
-<ul>
-<li><strong>Causal Forests</strong>: Wager &amp; Athey (2018)
-<em>Journal of the American Statistical Association</em></li>
-<li><strong>Targeting Analysis</strong>: Kitagawa &amp; Tetenov (2018)
-<em>Econometrica</em></li>
-<li><strong>Policy Learning</strong>: Athey &amp; Wager (2021)
-<em>Econometrica</em></li>
-</ul>
-<p>All implementations follow the standards established by the <a href="https://grf-labs.github.io/">Generalized Random Forests</a>
+<p>Implementations follow the standards established by the <a href="https://grf-labs.github.io/">Generalized Random Forests</a>
 development team.</p>
 </div>
-<div id="use-cases" class="section level2">
-<h2>Use Cases</h2>
-<div id="for-students" class="section level3">
-<h3>For Students</h3>
-<ul>
-<li>Graduate courses in causal inference</li>
-<li>Applied econometrics workshops<br />
-</li>
-<li>Machine learning for social science</li>
-<li>Research methodology training</li>
-</ul>
-</div>
-<div id="for-researchers" class="section level3">
-<h3>For Researchers</h3>
-<ul>
-<li>Pilot studies and method exploration</li>
-<li>Teaching and workshop materials</li>
-<li>Reproducible research workflows</li>
-<li>Methodological benchmarking</li>
-</ul>
-</div>
-<div id="for-instructors" class="section level3">
-<h3>For Instructors</h3>
-<ul>
-<li>Complete course materials</li>
-<li>Customizable workshop modules</li>
-<li>Assessment and exercise frameworks</li>
-<li>Professional visualization tools</li>
-</ul>
-</div>
-</div>
-<div id="contributing" class="section level2">
-<h2>Contributing</h2>
-<p>We welcome contributions! Please see our <a href="CONTRIBUTING.md">Contributing Guide</a> for details.</p>
 </div>
 <div id="citation" class="section level2">
 <h2>Citation</h2>
