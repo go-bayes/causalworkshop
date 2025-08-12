@@ -1,7 +1,6 @@
 # causalworkshop <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/go-bayes/causalworkshop/workflows/R-CMD-check/badge.svg)](https://github.com/go-bayes/causalworkshop/actions)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
@@ -9,31 +8,6 @@
 
 `causalworkshop` provides comprehensive educational tools for learning causal inference using machine learning methods, particularly causal forests. The package combines theoretical foundations with hands-on analysis workflows, making complex causal inference concepts accessible to students and researchers.
 
-## Key Features
-
-### 🎓 **Educational Focus**
-- Step-by-step tutorials for causal inference concepts
-- Clear explanations of selection bias and confounding
-- Interactive demonstrations of heterogeneous treatment effects
-- Publication-ready visualizations
-
-### 🌲 **Causal Forest Implementation**
-- Professional implementation following Wager & Athey (2018)
-- Honest sample splitting for valid inference
-- Comprehensive heterogeneity testing
-- Policy targeting analysis with Rate and Qini curves
-
-### 📊 **Realistic Simulations**
-- Research-grade data simulation functions
-- Religious belief and prosocial behavior framework
-- Correlated baseline measures with selection bias
-- Customizable treatment effect heterogeneity
-
-### 🎯 **Policy Applications**
-- Treatment targeting analysis
-- Policy tree learning
-- Cost-effectiveness evaluation
-- Population-level impact assessment
 
 ## Installation
 
@@ -48,12 +22,12 @@
 ### Method 1: Direct Installation (Recommended)
 
 ```r
-# Install devtools if not already installed
+# install devtools if not already installed
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
 
-# Install causalworkshop from GitHub
+# install causalworkshop from GitHub
 devtools::install_github("go-bayes/causalworkshop")
 ```
 
@@ -70,7 +44,8 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 # Install causalworkshop (includes all scripts)
 devtools::install_github("go-bayes/causalworkshop")
 
-# Install margot for advanced workflows
+# install margot for advanced workflows
+# warning, this package is being refactored: for demonstration purposes only.
 devtools::install_github("go-bayes/margot")
 ```
 
