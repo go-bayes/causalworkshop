@@ -1,0 +1,34 @@
+Package: causalworkshop
+Title: Educational Package for Causal Inference with Machine Learning
+Version: 0.1.0
+Authors@R: 
+    person("Joseph", "Bulbulia", , "joseph.bulbulia@vuw.ac.nz", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5861-2056"))
+Description: Provides educational tools and workflows for learning causal inference 
+    using machine learning methods, particularly causal forests. Includes simulation 
+    functions, analysis workflows, and comprehensive tutorials for understanding 
+    heterogeneous treatment effects, policy learning, and targeting analysis.
+License: MIT + file LICENSE.md
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 4.0.0)
+Imports:
+    cli,
+    dplyr,
+    grf,
+    ggplot2,
+    purrr,
+    scales,
+    tibble,
+    tidyr
+Suggests:
+    margot,
+    policytree,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+URL: https://github.com/go-bayes/causalworkshop
+BugReports: https://github.com/go-bayes/causalworkshop/issues
