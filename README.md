@@ -110,7 +110,27 @@ workshop_results <- run_workshop(n = 100, verbose = FALSE)
 
 ## Quick Start
 
-### Run the Complete Workshop
+### Option 1: Get Workshop Scripts (Recommended for Learning)
+
+```r
+library(causalworkshop)
+
+# Copy all workshop scripts to your working directory
+get_workshop_scripts()
+
+# See what scripts are available
+list_workshop_scripts()
+
+# Work through the scripts in order:
+# 01-baseline-adjustment.R    - Foundation concepts
+# 02-causal-forest-analysis.R - Core methodology  
+# 03-rate-qini-curves.R      - Performance evaluation
+# 04-policy-trees.R          - Decision rules
+# 05-margot-workflow.R       - Professional analysis
+# 06-interpretation.qmd       - Results reporting
+```
+
+### Option 2: Run the Complete Workshop Function
 
 ```r
 library(causalworkshop)
