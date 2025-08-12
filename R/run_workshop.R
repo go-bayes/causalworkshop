@@ -71,7 +71,7 @@ run_workshop <- function(n = 1000,
     cli::cli_h1("Step 1: Data Simulation")
   }
   
-  data <- simulate_religious_data(n = n, seed = seed, verbose = verbose)
+  data <- simulate_religious_data(n = n, seed = seed)
   
   # Step 2: Baseline Adjustment Analysis
   if (verbose) {
