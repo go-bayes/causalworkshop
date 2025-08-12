@@ -33,7 +33,7 @@ devtools::install_github("go-bayes/causalworkshop")
 
 ### Method 2: Using the SPARCC Day 2 Workshop Helper
 
-If you're taking the SPARCC Day 2 workshop, you can use the convenient installer script provided during the workshop, or install manually:
+Optionally install `margot`
 
 ```r
 # Manual installation for SPARCC Day 2
@@ -44,23 +44,12 @@ if (!requireNamespace("devtools", quietly = TRUE)) {
 # Install causalworkshop (includes all scripts)
 devtools::install_github("go-bayes/causalworkshop")
 
-# install margot for advanced workflows
+# install margot for advanced workflows OPTIONAL
 # warning, this package is being refactored: for demonstration purposes only.
 devtools::install_github("go-bayes/margot")
 ```
 
 This will install `causalworkshop` along with all required dependencies for the complete workshop experience.
-
-### Method 3: Development Installation
-
-For contributors or advanced users who want the latest development version:
-
-```r
-# Install with vignettes and suggests packages
-devtools::install_github("go-bayes/causalworkshop", 
-                        dependencies = TRUE, 
-                        build_vignettes = TRUE)
-```
 
 ### Verifying Installation
 
@@ -74,7 +63,7 @@ library(causalworkshop)
 check_workshop_prerequisites()
 
 # Run a quick test
-workshop_results <- run_workshop(n = 100, verbose = FALSE)
+workshop_results <- run_workshop(n = 30000, verbose = FALSE)
 ```
 
 ### Troubleshooting
@@ -229,7 +218,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## Citation
 
-If you use this package in academic work, please cite:
+If you use this package in academic work, please cite
 
 ```r
 citation("causalworkshop")
