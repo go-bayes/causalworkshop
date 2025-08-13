@@ -1,3 +1,21 @@
+# causalworkshop 0.1.6
+
+## Script Cleanup
+
+* **Removed 01-setup.R** - Manuscript template shell removed from workshop scripts
+* **Cleaner script collection** - Workshop now contains only functional analysis scripts
+* **Focused educational content** - Removed non-instructional template content
+
+## Scripts Now Included
+
+* 00-setup-verification.R - Environment setup verification
+* 01-baseline-adjustment.R - Foundation concepts and selection bias
+* 02-causal-forest-analysis.R - Core causal forest methodology
+* 03-rate-qini-curves.R - Targeting performance evaluation
+* 04-policy-trees.R - Decision rule learning
+* 05-margot-workflow.R - Advanced professional analysis workflow
+* install-packages.R - Package installation helper
+
 # causalworkshop 0.1.5
 
 ## Script Updates
