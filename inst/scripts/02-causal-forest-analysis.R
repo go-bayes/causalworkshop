@@ -116,7 +116,7 @@ forest_results <- list(
   variable_importance = importance_df
 )
 
-saveRDS(forest_results, "data/causal_forest_results.rds")
+saveRDS(forest_results, here::here("data", "causal_forest_results"))
 cli_alert_success("Results saved")
 
 cli_rule()
