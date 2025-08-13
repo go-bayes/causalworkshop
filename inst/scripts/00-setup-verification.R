@@ -17,7 +17,8 @@ required_packages <- list(
   "policytree" = "Policy learning for treatment assignment",
   "cli" = "Enhanced command line interface",
   "devtools" = "Package development tools (for margot installation)",
-  "purrr" = "Mapping plot labels"
+  "purrr" = "Mapping plot labels",
+  "here" = "Set paths"
 )
 
 cli_alert_info("Checking installation of {length(required_packages)} required packages")

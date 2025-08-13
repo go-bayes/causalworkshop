@@ -5,6 +5,7 @@
 library(cli)
 library(tidyverse)
 library(grf)
+library(here)
 
 cli_rule("Causal Forest Analysis")
 
@@ -14,7 +15,7 @@ if (!file.exists("data/religious_prosocial_data.rds")) {
 }
 
 
-data <- readRDS("data/religious_prosocial_data.rds")
+data <- readRDS(here::here("data", "religious_prosocial_data.rds"))
 cli_alert_info("Loaded data with {nrow(data)} observations")
 
 # prepare data for causal forest
