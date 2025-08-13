@@ -1,4 +1,4 @@
-# causalworkshop <img src="man/figures/logo.png" align="right" height="139" />
+# causalworkshop
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -34,7 +34,6 @@ devtools::install_github("go-bayes/causalworkshop")
 ###  Optionally install `margot`
 
 ```r
-
 # install margot for advanced workflows OPTIONAL
 # warning, this package is being refactored: for demonstration purposes in the SPARCC DAY 2 Workshop
 devtools::install_github("go-bayes/margot")
@@ -146,7 +145,7 @@ baseline_results$bias_reduction  # Quantifies improvement
 ```
 
 ### Module 2: Causal Forests for Heterogeneous Effects
-Discover how machine learning can estimate individual treatment effects while maintaining valid statistical inference.
+Consider how causal forests can estimate conditional average treatment effects while maintaining valid statistical inference.
 
 ```r
 # Estimates conditional average treatment effects τ(x)
