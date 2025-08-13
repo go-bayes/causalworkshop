@@ -135,7 +135,7 @@ if (file.exists(file.path(dir_results, "models_binary_cate.qs"))) {
   cli_alert_info("Fitting causal forests with honest sample splitting...")
 models_binary_cate <- margot::margot_causal_forest(
     data = data_standardised,
-    outcome_vars = t2_outcome_z,
+    outcome_vars = t2_outcomes_z,
     covariates = X,
     W = W,
     weights = NULL,
