@@ -1,3 +1,17 @@
+# causalworkshop 0.1.4
+
+## Dependency Fixes
+
+* **Added missing glue dependency** - Fixed R CMD check warning about undeclared glue import
+* **Enhanced margot error handling** - Improved robustness in 05-margot-workflow.R with better error messages
+* **Added here to prerequisite checker** - Updated required packages list to include here package
+
+## Bug Fixes
+
+* Fixed R CMD check warnings related to package dependencies
+* Improved error handling for GitHub package installation in workshop scripts
+* Enhanced prerequisite checking to include newly required packages
+
 # causalworkshop 0.1.3
 
 ## Path Management Improvements

@@ -211,7 +211,7 @@ check_workshop_prerequisites <- function(install_missing = FALSE, include_option
   cli::cli_rule("Workshop Prerequisites Check")
   
   # Required packages
-  required_packages <- c("cli", "dplyr", "grf", "ggplot2", "purrr", "scales", "tibble", "tidyr")
+  required_packages <- c("cli", "dplyr", "grf", "ggplot2", "here", "purrr", "scales", "tibble", "tidyr")
   
   # Optional packages  
   optional_packages <- c("margot", "policytree", "knitr", "rmarkdown")

@@ -26,14 +26,23 @@ if (!requireNamespace("margot", quietly = TRUE)) {
     install.packages("devtools")
   }
   cli_alert_info("Installing margot package from GitHub...")
-  devtools::install_github("go-bayes/margot")
+  tryCatch({
+    devtools::install_github("go-bayes/margot")
+  }, error = function(e) {
+    stop("Failed to install margot from GitHub. Please install manually: devtools::install_github('go-bayes/margot')")
+  })
 }
 
+# load margot
+if (!requireNamespace("margot", quietly = TRUE)) {
+  stop("Margot package not available. Please install: devtools::install_github('go-bayes/margot')")
+}
 library(margot)
 
 # verify margot version
 if (packageVersion("margot") < "1.0.233") {
-  stop("Margot >= 1.0.233 required. Run: devtools::install_github('go-bayes/margot')")
+  cli_alert_warning("Margot version may be outdated. Recommended: >= 1.0.233")
+  cli_alert_info("To update: devtools::install_github('go-bayes/margot')")
 }
 
 # install additional packages if missing
