@@ -8,7 +8,7 @@ get_workshop_scripts(dest_dir = "workshop-scripts", overwrite = FALSE)
 }
 \arguments{
 \item{dest_dir}{Character. Directory where scripts should be copied.
-Default is "workshop-scripts" in the current working directory.}
+Default is "workshop-scripts" in the project root directory (using here::here()).}
 
 \item{overwrite}{Logical. Whether to overwrite existing files (default: FALSE)}
 }

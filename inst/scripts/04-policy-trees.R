@@ -6,11 +6,12 @@ library(cli)
 library(tidyverse)
 library(grf)
 library(policytree)
+library(here)
 
 cli_rule("Policy Tree Analysis")
 
 # load causal forest results
-if (!file.exists("data/causal_forest_results.rds")) {
+if (!file.exists(here::here("data", "causal_forest_results.rds"))) {
   stop("Run previous analysis scripts first")
 }
 
@@ -191,7 +192,12 @@ policy_analysis <- list(
   regret_analysis = list(depth_1 = individual_regret_1, depth_2 = individual_regret_2)
 )
 
-saveRDS(policy_analysis, "data/policy_analysis.rds")
+# create data directory if needed
+if (!dir.exists(here::here("data"))) {
+  dir.create(here::here("data"), recursive = TRUE)
+}
+
+saveRDS(policy_analysis, here::here("data", "policy_analysis.rds"))
 cli_alert_success("Policy tree analysis saved")
 
 cli_rule()

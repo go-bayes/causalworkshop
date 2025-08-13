@@ -10,7 +10,7 @@ library(here)
 cli_rule("Causal Forest Analysis")
 
 # load data from baseline adjustment
-if (!file.exists("data/religious_prosocial_data.rds")) {
+if (!file.exists(here::here("data", "religious_prosocial_data.rds"))) {
   stop("Run 01-baseline-adjustment.R first")
 }
 
@@ -116,7 +116,12 @@ forest_results <- list(
   variable_importance = importance_df
 )
 
-saveRDS(forest_results, here::here("data", "causal_forest_results"))
+# create data directory if needed
+if (!dir.exists(here::here("data"))) {
+  dir.create(here::here("data"), recursive = TRUE)
+}
+
+saveRDS(forest_results, here::here("data", "causal_forest_results.rds"))
 cli_alert_success("Results saved")
 
 cli_rule()

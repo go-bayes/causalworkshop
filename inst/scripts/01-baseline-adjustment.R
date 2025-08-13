@@ -4,6 +4,7 @@
 
 library(cli)
 library(tidyverse)
+library(here)
 
 cli_rule("Religious Belief and Prosocial Behavior")
 
@@ -84,6 +85,11 @@ print(results %>% mutate(across(where(is.numeric), ~ round(.x, 3))))
 # bias reduction
 avg_bias_reduction <- mean(abs(results$naive_bias) - abs(results$adjusted_bias))
 cli_alert_success("Average bias reduction: {round(avg_bias_reduction, 3)}")
+
+# create data directory if needed
+if (!dir.exists(here::here("data"))) {
+  dir.create(here::here("data"), recursive = TRUE)
+}
 
 # save data for causal forest analysis
 saveRDS(data, here::here("data", "religious_prosocial_data.rds"))

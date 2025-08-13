@@ -13,11 +13,12 @@
 library(cli)
 library(tidyverse)
 library(grf)
+library(here)
 
 cli_rule("Rate and Qini Curve Analysis")
 
 # load causal forest results
-if (!file.exists("data/causal_forest_results.rds")) {
+if (!file.exists(here::here("data", "causal_forest_results.rds"))) {
   stop("Run 01-baseline-adjustment.R and 02-causal-forest-analysis.R first")
 }
 
@@ -180,7 +181,12 @@ targeting_analysis <- list(
   qini_viz_data = qini_viz_data
 )
 
-saveRDS(targeting_analysis, "data/targeting_analysis.rds")
+# create data directory if needed
+if (!dir.exists(here::here("data"))) {
+  dir.create(here::here("data"), recursive = TRUE)
+}
+
+saveRDS(targeting_analysis, here::here("data", "targeting_analysis.rds"))
 cli_alert_success("Rate and Qini analysis saved")
 
 cli_rule("Targeting Performance Visualisation")

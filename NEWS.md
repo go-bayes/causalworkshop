@@ -1,3 +1,27 @@
+# causalworkshop 0.1.3
+
+## Path Management Improvements
+
+* **Added `here` package dependency** - Enhanced path management for reproducible workflows
+* **Updated all scripts** - All workshop scripts now use `here::here()` for robust path resolution
+* **Improved portability** - Scripts work consistently across different working directories and environments
+* **Enhanced data organisation** - All data files saved to `project_root/data/` directory using standardised paths
+* **Directory auto-creation** - Scripts automatically create required directories if they don't exist
+
+## Technical Changes
+
+* Added `here` package to Imports in DESCRIPTION
+* Updated `get_workshop_scripts()` to use `here::here()` for destination paths
+* Modified all workshop scripts (01-05) to use consistent path management
+* Added automatic directory creation for `data/` and `results/` folders
+* Fixed file path operations to be working directory independent
+
+## Bug Fixes
+
+* Resolved path-related errors in collaborative environments
+* Fixed script portability issues across different systems
+* Eliminated working directory dependencies in all workshop scripts
+
 # causalworkshop 0.1.1
 
 ## Major Features

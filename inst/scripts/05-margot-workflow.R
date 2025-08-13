@@ -56,15 +56,15 @@ library(patchwork)
 cli_rule("Data Preparation and Forest Configuration")
 
 # create results directory
-dir.create("results", showWarnings = FALSE)
-dir_results <- "results"
+dir.create(here::here("results"), showWarnings = FALSE)
+dir_results <- here::here("results")
 
 # load data
-if (!file.exists("data/religious_prosocial_data.rds")) {
+if (!file.exists(here::here("data", "religious_prosocial_data.rds"))) {
   stop("Run 01-baseline-adjustment.R first to generate data")
 }
 
-data <- readRDS("data/religious_prosocial_data.rds")
+data <- readRDS(here::here("data", "religious_prosocial_data.rds"))
 cli_alert_info("Loaded data with {nrow(data)} observations")
 
 # prepare covariates matrix

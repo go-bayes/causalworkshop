@@ -5,7 +5,7 @@
 #' through advanced margot workflow analysis.
 #'
 #' @param dest_dir Character. Directory where scripts should be copied.
-#'   Default is "workshop-scripts" in the current working directory.
+#'   Default is "workshop-scripts" in the project root directory (using here::here()).
 #' @param overwrite Logical. Whether to overwrite existing files (default: FALSE)
 #'
 #' @return Character vector of copied file paths (invisibly)
@@ -32,10 +32,13 @@
 #' @export
 get_workshop_scripts <- function(dest_dir = "workshop-scripts", overwrite = FALSE) {
   
+  # Use here::here() to resolve path relative to project root
+  dest_path <- here::here(dest_dir)
+  
   # Create destination directory
-  if (!dir.exists(dest_dir)) {
-    dir.create(dest_dir, recursive = TRUE)
-    cli::cli_alert_success("Created directory: {dest_dir}")
+  if (!dir.exists(dest_path)) {
+    dir.create(dest_path, recursive = TRUE)
+    cli::cli_alert_success("Created directory: {dest_path}")
   }
   
   # Find source scripts directory
@@ -57,7 +60,7 @@ get_workshop_scripts <- function(dest_dir = "workshop-scripts", overwrite = FALS
   
   for (file in script_files) {
     filename <- basename(file)
-    dest_file <- file.path(dest_dir, filename)
+    dest_file <- file.path(dest_path, filename)
     
     if (file.exists(dest_file) && !overwrite) {
       cli::cli_alert_warning("Skipping {filename} (already exists)")
@@ -76,7 +79,7 @@ get_workshop_scripts <- function(dest_dir = "workshop-scripts", overwrite = FALS
   
   if (length(copied_files) > 0) {
     cli::cli_rule("Workshop Scripts Ready")
-    cli::cli_alert_info("Scripts copied to: {dest_dir}")
+    cli::cli_alert_info("Scripts copied to: {dest_path}")
     cli::cli_alert_info("Start with: 01-baseline-adjustment.R")
     cli::cli_alert_info("For help: ?get_workshop_scripts")
   }
