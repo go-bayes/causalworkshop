@@ -17,7 +17,6 @@
 #' - 03-rate-qini-curves.R: Targeting performance evaluation
 #' - 04-policy-trees.R: Policy tree learning and interpretation
 #' - 05-margot-workflow.R: Advanced workflow with margot ecosystem
-#' - 06-interpretation.qmd: Results interpretation and reporting
 #'
 #' @examples
 #' # Copy scripts to default location
@@ -106,24 +105,21 @@ list_workshop_scripts <- function() {
       "02-causal-forest-analysis.R", 
       "03-rate-qini-curves.R",
       "04-policy-trees.R",
-      "05-margot-workflow.R",
-      "06-interpretation.qmd"
+      "05-margot-workflow.R"
     ),
     Description = c(
       "Demonstrates selection bias and baseline covariate adjustment",
       "Basic causal forest implementation with GRF",
       "Rate and Qini curve analysis for targeting evaluation", 
       "Policy tree learning for treatment assignment rules",
-      "Advanced workflow using the margot ecosystem",
-      "Results interpretation and reporting template"
+      "Advanced workflow using the margot ecosystem"
     ),
     Purpose = c(
       "Foundation concepts",
       "Core methodology", 
       "Performance evaluation",
       "Decision rules",
-      "Professional analysis",
-      "Communication"
+      "Professional analysis"
     ),
     stringsAsFactors = FALSE
   )

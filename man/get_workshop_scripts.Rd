@@ -28,7 +28,6 @@ This function copies the complete set of workshop scripts:
 \item 03-rate-qini-curves.R: Targeting performance evaluation
 \item 04-policy-trees.R: Policy tree learning and interpretation
 \item 05-margot-workflow.R: Advanced workflow with margot ecosystem
-\item 06-interpretation.qmd: Results interpretation and reporting
 }
 }
 \examples{

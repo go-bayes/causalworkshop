@@ -1,3 +1,17 @@
+# causalworkshop 0.1.5
+
+## Script Updates
+
+* **Removed 06-interpretation.qmd** - Quarto document removed temporarily for future development
+* **Updated documentation** - Cleaned up references to script 06 in function documentation
+* **Streamlined workflow** - Workshop now focuses on core R analysis scripts (01-05)
+
+## Documentation Changes
+
+* Updated `get_workshop_scripts()` and `list_workshop_scripts()` documentation
+* Removed references to interpretation document from help files
+* Cleaned up script descriptions and purposes
+
 # causalworkshop 0.1.4
 
 ## Dependency Fixes
