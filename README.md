@@ -4,7 +4,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-## Educational Package for Causal Inference with Machine Learning
+## Demo -- causal inference using `grf`
 
 `causalworkshop` provides tools for learning causal inference using machine learning methods, here, causal forests. 
 
