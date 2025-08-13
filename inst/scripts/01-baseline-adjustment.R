@@ -1,4 +1,4 @@
-# Religious Belief and Prosocial Behavior: Baseline Adjustment
+# Religious Belief and Prosocial Behaviour: Baseline Adjustment
 # Demonstrates selection bias and covariate adjustment in causal inference
 # Author: Joseph Bulbulia, Victoria University of Wellington
 
@@ -86,9 +86,10 @@ avg_bias_reduction <- mean(abs(results$naive_bias) - abs(results$adjusted_bias))
 cli_alert_success("Average bias reduction: {round(avg_bias_reduction, 3)}")
 
 # save data for causal forest analysis
-saveRDS(data, "data/religious_prosocial_data.rds")
+saveRDS(data, here::here("data", "religious_prosocial_data.rds"))
 cli_alert_success("Data saved for heterogeneity analysis")
 
 cli_rule()
 
 hist(data$volunteer_outcome)
+

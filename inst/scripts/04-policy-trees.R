@@ -14,7 +14,7 @@ if (!file.exists("data/causal_forest_results.rds")) {
   stop("Run previous analysis scripts first")
 }
 
-results <- readRDS("data/causal_forest_results.rds")
+results <- readRDS(here::here("data", "causal_forest_results.rds"))
 cf <- results$causal_forest
 data_with_tau <- results$predictions
 

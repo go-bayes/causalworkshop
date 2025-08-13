@@ -1,6 +1,6 @@
 # Rate and Qini Curve Analysis
 # Evaluates targeting performance for heterogeneous treatment effects
-# 
+#
 # EDUCATIONAL NOTE: Understanding the Simulation Structure
 # In our simulated data, heterogeneity is primarily driven by two variables:
 # - Age: Modifies treatment effects by +0.3 * age
@@ -21,7 +21,7 @@ if (!file.exists("data/causal_forest_results.rds")) {
   stop("Run 01-baseline-adjustment.R and 02-causal-forest-analysis.R first")
 }
 
-results <- readRDS("data/causal_forest_results.rds")
+results <- readRDS(here::here("data", "causal_forest_results.rds"))
 cf <- results$causal_forest
 data_with_tau <- results$predictions
 
@@ -41,7 +41,7 @@ cli_alert_info("Computing rate and qini curves...")
 # EDUCATIONAL NOTE: Rate vs Qini Curves
 # - Rate Curve: Shows efficiency gain from targeting (how much better than random)
 # - Qini Curve: Shows cumulative gain from targeting (total additional benefit)
-# 
+#
 # In our 2-dimensional heterogeneity structure, we expect:
 # - Strong gains from targeting the top 20-30% (high age/baseline charity)
 # - Diminishing returns beyond that (limited remaining heterogeneity)
@@ -68,11 +68,11 @@ for (r in rates) {
   gain <- avg_tau_targeted - avg_tau_overall
 
   rate_results <- bind_rows(rate_results,
-    tibble(
-      rate = r,
-      avg_tau_targeted = avg_tau_targeted,
-      gain_over_random = gain
-    )
+                            tibble(
+                              rate = r,
+                              avg_tau_targeted = avg_tau_targeted,
+                              gain_over_random = gain
+                            )
   )
 }
 
@@ -100,11 +100,11 @@ for (p in percentiles) {
   cum_gain <- sum(tau_hat[top_indices]) - p * sum(tau_hat)
 
   qini_results <- bind_rows(qini_results,
-    tibble(
-      percentile = p,
-      qini_coefficient = qini_coeff,
-      cumulative_gain = cum_gain
-    )
+                            tibble(
+                              percentile = p,
+                              qini_coefficient = qini_coeff,
+                              cumulative_gain = cum_gain
+                            )
   )
 }
 
