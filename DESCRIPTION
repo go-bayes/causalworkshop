@@ -1,6 +1,6 @@
 Package: causalworkshop
 Title: Educational Package for Causal Inference with Machine Learning
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: 
     person("Joseph", "Bulbulia", , "joseph.bulbulia@vuw.ac.nz", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5861-2056"))
@@ -11,7 +11,7 @@ Description: Provides educational tools and workflows for learning causal infere
 License: MIT + file LICENSE.md
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 4.0.0)
 Imports:
@@ -28,6 +28,7 @@ Imports:
 Suggests:
     margot,
     policytree,
+    fastpolicytree,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

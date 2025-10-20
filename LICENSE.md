@@ -46,6 +46,3 @@ Bulbulia, J.A. (2025). causalworkshop: Educational Package for Causal Inference
   https://github.com/go-bayes/causalworkshop
 ```
 
-## Attribution
-
-This work was developed as part of the SPARCC Workshop Series and Epic Lab at Victoria University of Wellington, New Zealand.

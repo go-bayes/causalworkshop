@@ -1,4 +1,4 @@
-# causalworkshop 0.1.6
+# causalworkshop 0.1.7
 
 ## Script Cleanup
 
@@ -14,7 +14,16 @@
 * 03-rate-qini-curves.R - Targeting performance evaluation
 * 04-policy-trees.R - Decision rule learning
 * 05-margot-workflow.R - Advanced professional analysis workflow
+* 06-margot-analysis.R - Code-review friendly ATE/CATE summary with optional policy workflow
+* 07-grf-style-simulation.R - GRF-inspired simulation for advanced experimentation
 * install-packages.R - Package installation helper
+
+## New Features
+
+* Added optional fast policy tree stability workflow to `06-margot-analysis.R`, capturing depth recommendations and coverage summaries for policy deployment.
+* Introduced `simulate_grf_style()` (script 07) to mirror GRF benchmark data-generating processes and stress-test the workshop analysis pipeline.
+* Extended prerequisite checks (setup verification script) and package metadata to include the `fastpolicytree` helper.
+* Script copying/listing helpers now recognise the new simulation script.
 
 # causalworkshop 0.1.5
 

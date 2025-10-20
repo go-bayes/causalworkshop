@@ -1,2 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^save_directory/
+^quarto/
+^bibliography/
+^csl/
+^README\.html$
+^README_files/

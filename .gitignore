@@ -78,3 +78,7 @@ data-raw/*.rds
 *~
 *.bak
 *.swp
+
+
+# Save directory # files too large
+save_directory/

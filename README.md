@@ -35,7 +35,7 @@ devtools::install_github("go-bayes/causalworkshop")
 
 ```r
 # install margot for advanced workflows OPTIONAL
-# warning, this package is being refactored: for demonstration purposes in the SPARCC DAY 2 Workshop
+# warning, this package is being refactored: for demonstration purposes in the Workshop
 devtools::install_github("go-bayes/margot")
 ```
 
@@ -201,4 +201,4 @@ Bulbulia, J.A. (2025). causalworkshop: Educational Package for Causal Inference
 
 ---
 
-*This package was developed for educational purposes as part of the SPARCC Workshop Series and Epic Lab at Victoria University of Wellington.*
+*This package was developed for educational purposes as part of the Epic Lab at Victoria University of Wellington.*
