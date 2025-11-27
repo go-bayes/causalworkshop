@@ -5,13 +5,25 @@
 # Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 # Part of the causalworkshop R package: https://github.com/go-bayes/causalworkshop
 #
-# EDUCATIONAL NOTE: Understanding Our Simulation Structure
+# EDUCATIONAL NOTE: Understanding Our Simulation Structure and Policy Tree Depth Selection
 # This analysis uses data where heterogeneity is created by:
 # - For charity outcome: τ(x) = 0.25 + 0.3*age + 0.2*baseline_charity
 # - For volunteer outcome: τ(x) = 0.4 (constant effect, no heterogeneity)
 #
-# This 2-dimensional structure means policy trees should use max_depth = 1L
-# to match the true underlying heterogeneity pattern and avoid overfitting.
+# DEPTH SELECTION RATIONALE:
+# Although the charity heterogeneity involves TWO covariates (age and baseline_charity),
+# the effect structure is ADDITIVE (linear combination). For additive heterogeneity:
+#   - A depth-1 tree splitting on the dominant variable (age, coefficient=0.3)
+#     captures most of the actionable treatment effect variation
+#   - The marginal policy value gain from depth-2 is typically small (~0.4%)
+#   - Simpler trees are more stable, interpretable, and actionable for policymakers
+#
+# The workflow uses min_gain_for_depth_switch = 0.005 (0.5% policy value improvement)
+# as a parsimony threshold. Depth-2 is selected only when gains exceed this threshold.
+#
+# For NONLINEAR/PIECEWISE heterogeneity (e.g., τ(x) = 1.5*(x1>0 & x2>0) + ...),
+# depth-2 trees provide substantially larger gains and are correctly selected.
+# See 07-grf-style-simulation.R for an example where depth-2 is warranted.
 #
 # Author: Joseph Bulbulia, Victoria University of Wellington
 
