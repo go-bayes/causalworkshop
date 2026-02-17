@@ -1,3 +1,17 @@
+# causalworkshop 0.2.1
+
+## Non-Linear Misspecification Demo
+
+* **`simulate_nonlinear_data()`** generates data with randomised treatment and
+  a highly non-linear heterogeneous effect surface (sinusoidal, rectified
+  quadratic, three-way interaction). No confounding by design: estimation error
+  comes purely from functional form misspecification.
+* **`compare_ate_methods()`** fits OLS, polynomial regression (degree 3), GAM,
+  and causal forest to the non-linear data, returning a summary table, individual
+  predictions, and two comparison plots. Demonstrates progressive improvement in
+  recovering the true effect surface.
+* Added `mgcv` to Suggests for GAM estimation.
+
 # causalworkshop 0.2.0
 
 ## New Simulation Function

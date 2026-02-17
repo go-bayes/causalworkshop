@@ -1,6 +1,6 @@
 Package: causalworkshop
 Title: Educational Package for Causal Inference with Machine Learning
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person("Joseph", "Bulbulia", , "joseph.bulbulia@vuw.ac.nz", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5861-2056"))
@@ -27,6 +27,7 @@ Imports:
     tidyr
 Suggests:
     margot,
+    mgcv,
     policytree,
     fastpolicytree,
     knitr,
