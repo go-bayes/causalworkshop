@@ -1,3 +1,23 @@
+# causalworkshop 0.2.0
+
+## New Simulation Function
+
+* **`simulate_nzavs_data()`** generates a synthetic three-wave panel dataset
+  modelled on the New Zealand Attitudes and Values Study (NZAVS).
+  - Long panel format: `n` individuals x 3 waves (default n = 5000).
+  - Baseline confounders: age, gender, ethnicity, education, partnership,
+    employment, income, deprivation, Big Five personality traits.
+  - Three candidate exposures: community group participation, religious service
+    attendance, volunteer work.
+  - Four candidate outcomes: wellbeing, belonging, self-esteem, life
+    satisfaction.
+  - Built-in confounding: exposure assignment depends on baseline covariates
+    via logistic selection models.
+  - Ground-truth treatment effects: twelve `tau_*` columns with heterogeneous
+    individual-level causal effects, including non-linear terms (squared
+    neuroticism, conscientiousness-openness interaction).
+  - Reproducible: same seed produces identical data on any machine.
+
 # causalworkshop 0.1.7
 
 ## Script Cleanup
