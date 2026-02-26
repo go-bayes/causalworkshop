@@ -4,201 +4,136 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-## Demo -- causal inference using `grf`
-
-`causalworkshop` provides tools for learning causal inference using machine learning methods, here, causal forests. 
-
+An R package for teaching causal inference with machine learning. Provides simulation functions, analysis workflows, and visualisation tools built around causal forests, with an optional pathway into the [`margot`](https://github.com/go-bayes/margot) ecosystem for professional-grade analyses.
 
 ## Installation
 
-### Prerequisites
-
-- **R version**: 4.0.0 or higher
-- **Operating System**: Windows, macOS, or Linux
-- **Required system tools**: 
-  - Git (for development)
-  - C++ compiler (usually handled automatically by R)
-
-### Installation (Recommended)
+Requires R >= 4.0.
 
 ```r
-# install devtools if not already installed
+# install from GitHub
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-
-# install causalworkshop from GitHub
 devtools::install_github("go-bayes/causalworkshop")
 ```
 
-###  Optionally install `margot`
+Verify the installation:
 
 ```r
-# install margot for advanced workflows OPTIONAL
-# warning, this package is being refactored: for demonstration purposes in the Workshop
-devtools::install_github("go-bayes/margot")
-```
-
-This will install `causalworkshop` along with all required dependencies for the complete workshop experience.
-
-### Verifying Installation
-
-After installation, verify everything works:
-
-```r
-# Load the package
 library(causalworkshop)
-
-# Check prerequisites
 check_workshop_prerequisites()
-
-# Run a quick test
-workshop_results <- run_workshop(n = 30000, verbose = FALSE)
 ```
 
-### Troubleshooting
+## Quick start
 
-**Common Issues and Solutions:**
-
-1. **Package compilation errors**: Install Rtools on Windows or Xcode command line tools on macOS
-2. **Missing dependencies**: Run `install.packages(c("grf", "dplyr", "ggplot2"))` manually
-3. **margot package issues**: Install latest version with `devtools::install_github("go-bayes/margot")`
-4. **Permission errors**: On macOS/Linux, you may need to install packages to a user library
-
-**Getting Help:**
-- Create an issue: https://github.com/go-bayes/causalworkshop/issues
-- Check existing issues for similar problems
-- Include your R version and operating system in bug reports
-
-## Quick Start
-
-### Option 1: Get Workshop Scripts (Recommended for Learning)
+### Run the complete pipeline
 
 ```r
 library(causalworkshop)
 
-# Copy all workshop scripts to your working directory
-get_workshop_scripts()
+# simulate data, fit causal forest, visualise results
+workshop_results <- run_workshop(n = 30000)
 
-# See what scripts are available
-list_workshop_scripts()
-
-# Work through the scripts in order:
-# 01-baseline-adjustment.R    - Foundation concepts
-# 02-causal-forest-analysis.R - Core methodology  
-# 03-rate-qini-curves.R      - Performance evaluation
-# 04-policy-trees.R          - Decision rules
-# 05-margot-workflow.R       - Professional analysis
-# 06-interpretation.qmd       - Results reporting
-```
-
-### Option 2: Run the Complete Workshop Function
-
-```r
-library(causalworkshop)
-
-# Check prerequisites
-check_workshop_prerequisites()
-
-# Run complete educational pipeline
-workshop_results <- run_workshop()
-
-# View key results
+# inspect
 workshop_results$baseline_results$results_table
 workshop_results$causal_forest_results$heterogeneity_stats
-
-# Display educational plots
-workshop_results$selection_bias_plot
-workshop_results$heterogeneity_plot
 workshop_results$targeting_plots$rate_plot
 ```
 
-### Individual Workshop Modules
+### Step by step
 
 ```r
-# 1. Simulate realistic data
+# 1. simulate data with selection bias and heterogeneous effects
 data <- simulate_religious_data(n = 2000)
 
-# 2. Demonstrate selection bias
+# 2. demonstrate selection bias vs baseline adjustment
 baseline_results <- workshop_baseline_adjustment(data)
 plot_selection_bias(baseline_results$results_table)
 
-# 3. Estimate heterogeneous treatment effects
+# 3. estimate conditional average treatment effects
 cf_results <- workshop_causal_forest(data)
 plot_heterogeneity_distribution(cf_results$predictions)
 
-# 4. Evaluate targeting performance
+# 4. evaluate targeting performance
 targeting_plots <- plot_rate_qini_curves(cf_results$predictions)
 targeting_plots$rate_plot
 targeting_plots$qini_plot
 ```
 
-## Workshop Content
+## Simulation functions
 
-### Module 1: Selection Bias and Baseline Adjustment
-Learn why naive comparisons fail in observational studies and how baseline adjustment addresses selection bias.
+| Function | Purpose |
+|----------|---------|
+| `simulate_religious_data()` | Selection bias and heterogeneous treatment effects (religious belief on prosocial outcomes) |
+| `simulate_nzavs_data()` | Three-wave panel data with multiple exposures, outcomes, confounders, and known ground-truth effects |
+| `simulate_nonlinear_data()` | Randomised treatment with a non-linear treatment effect surface for comparing estimation methods |
+| `simulate_measurement_items()` | Six-item distress scale with known measurement non-invariance across groups |
+| `simulate_ate_data_with_weights()` | Sample and population data for demonstrating population weighting and estimand transportability |
+
+## Analysis and visualisation
+
+| Function | Purpose |
+|----------|---------|
+| `workshop_baseline_adjustment()` | Compare naive vs covariate-adjusted estimates against known treatment effects |
+| `workshop_causal_forest()` | Fit a causal forest and return predictions, heterogeneity statistics, and variable importance |
+| `compare_ate_methods()` | Fit OLS, polynomial, GAM, and causal forest side by side on non-linear data |
+| `plot_selection_bias()` | Visualise naive vs adjusted estimates against truth |
+| `plot_heterogeneity_distribution()` | Distribution of individual treatment effect predictions |
+| `plot_rate_qini_curves()` | RATE and Qini targeting curves for evaluating treatment prioritisation |
+
+## Workshop scripts
+
+The package bundles self-contained R scripts that walk through a complete causal inference workflow. Copy them to your working directory:
 
 ```r
-# Demonstrates selection bias
-baseline_results <- workshop_baseline_adjustment()
-baseline_results$bias_reduction  # Quantifies improvement
+get_workshop_scripts()
+list_workshop_scripts()
 ```
 
-### Module 2: Causal Forests for Heterogeneous Effects
-Consider how causal forests can estimate conditional average treatment effects while maintaining valid statistical inference.
+Scripts are designed to be worked through in order:
+
+| Script | Topic |
+|--------|-------|
+| `00-setup-verification.R` | Environment and dependency checks |
+| `01-baseline-adjustment.R` | Selection bias and covariate adjustment |
+| `02-causal-forest-analysis.R` | Causal forest estimation |
+| `03-rate-qini-curves.R` | RATE and Qini heterogeneity tests |
+| `04-policy-trees.R` | Policy tree learning |
+| `05-margot-workflow.R` | Full pipeline using the [`margot`](https://github.com/go-bayes/margot) package |
+| `06-margot-analysis.R` | Extended analysis: stability, policy workflow, Qini gain |
+| `07-grf-style-simulation.R` | Non-linear heterogeneity benchmark |
+
+Scripts 05 and 06 require the `margot` package:
 
 ```r
-# Estimates conditional average treatment effects τ(x)
-cf_results <- workshop_causal_forest()
-cf_results$heterogeneity_stats   # Summary of effect variation
-cf_results$variable_importance   # Drivers of heterogeneity
+devtools::install_github("go-bayes/margot")
 ```
-
-### Module 3: Targeting and Policy Analysis
-Explore how treatment effect heterogeneity can inform policy targeting decisions.
-
-```r
-# Evaluates targeting performance
-plots <- plot_rate_qini_curves(cf_results$predictions)
-plots$efficiency_data  # Targeting efficiency metrics
-```
-
-
-Implementations follow the standards established by the [Generalized Random Forests](https://grf-labs.github.io/) development team.
-
 
 ## Citation
-
-If you use this package in academic work, please cite
 
 ```r
 citation("causalworkshop")
 ```
 
-## License and Copyright
-
-### Software License
-This R package is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for details.
-
-### Educational Content License
-The educational content, tutorials, and documentation are licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
-
-**Copyright © 2025 Joseph A. Bulbulia**
-
-### Citation
-If you use this package in academic work, please cite:
 ```
-Bulbulia, J.A. (2025). causalworkshop: Educational Package for Causal Inference 
-  with Machine Learning. R package version 0.1.0. 
+Bulbulia, J.A. (2026). causalworkshop: Educational Package for Causal Inference
+  with Machine Learning. R package version 0.3.0.
   https://github.com/go-bayes/causalworkshop
 ```
 
-## Related Packages
+## Licence
 
-- [`grf`](https://grf-labs.github.io/): Core causal forest implementation
-- [`margot`](https://github.com/go-bayes/margot): Advanced causal inference workflows
-- [`policytree`](https://github.com/grf-labs/policytree): Policy learning tools
+Software: [MIT](LICENSE.md). Educational content: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+Copyright 2025-2026 Joseph A. Bulbulia.
+
+## Related packages
+
+- [`grf`](https://grf-labs.github.io/grf/): Generalised random forests
+- [`margot`](https://github.com/go-bayes/margot): Causal inference workflows for panel data
+- [`policytree`](https://github.com/grf-labs/policytree): Policy learning
 
 ---
 
-*This package was developed for educational purposes as part of the Epic Lab at Victoria University of Wellington.*
+*Developed at the [ACCEPT Lab](https://github.com/go-bayes/accept), Te Herenga Waka, Victoria University of Wellington.*
