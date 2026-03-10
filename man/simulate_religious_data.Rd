@@ -19,8 +19,8 @@ simulate_religious_data(
 \item{heterogeneous_effects}{Logical. Whether to include heterogeneous
 treatment effects (default: TRUE)}
 
-\item{strong_selection}{Logical. Whether to include strong selection bias
-(default: TRUE)}
+\item{strong_selection}{Logical. Whether treatment assignment should depend
+strongly on observed baseline covariates (default: TRUE)}
 }
 \value{
 A tibble with simulated data including:
@@ -35,21 +35,21 @@ A tibble with simulated data including:
 \description{
 Generates realistic simulated data for studying causal effects of religious
 belief on prosocial outcomes. Creates correlated baseline measures with
-selection bias and heterogeneous treatment effects.
+observed confounding and heterogeneous treatment effects.
 }
 \details{
 This function simulates realistic data with:
 \itemize{
 \item Correlated baseline characteristics
-\item Selection bias (religious people differ systematically)
+\item Treatment assignment that depends on baseline covariates
 \item Heterogeneous treatment effects (effects vary by individual characteristics)
 \item Realistic outcome distributions
 }
 
 The simulation is designed for educational purposes to demonstrate:
 \itemize{
-\item Selection bias in observational studies
-\item Importance of baseline adjustment
+\item Bias from observed pre-treatment confounding in observational studies
+\item How baseline adjustment can reduce bias under measured confounding
 \item Heterogeneous treatment effects
 \item Policy targeting applications
 }

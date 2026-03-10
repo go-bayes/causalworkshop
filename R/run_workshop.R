@@ -16,14 +16,15 @@
 #'     \item{causal_forest_results}{Results from causal forest analysis}
 #'     \item{targeting_plots}{Rate and Qini curve visualizations (if requested)}
 #'     \item{heterogeneity_plot}{Treatment effect distribution plot (if requested)}
-#'     \item{selection_bias_plot}{Selection bias demonstration plot (if requested)}
+#'     \item{observed_confounding_plot}{Observed-confounding demonstration plot (if requested)}
+#'     \item{selection_bias_plot}{Backward-compatible alias for observed_confounding_plot}
 #'   }
 #'
 #' @details
 #' This function provides a complete educational workflow covering:
 #'
-#' 1. **Data Simulation**: Realistic data with selection bias and heterogeneous effects
-#' 2. **Baseline Adjustment**: Demonstrates importance of controlling for confounders
+#' 1. **Data Simulation**: Realistic data with observed confounding and heterogeneous effects
+#' 2. **Baseline Adjustment**: Demonstrates bias reduction after controlling for measured pre-treatment confounders
 #' 3. **Causal Forests**: Estimates individual treatment effects τ(x)
 #' 4. **Targeting Analysis**: Evaluates policy targeting using Rate and Qini curves
 #' 5. **Visualization**: Creates publication-ready plots for all analyses
@@ -102,11 +103,12 @@ run_workshop <- function(n = 1000,
       cli::cli_alert_info("Generating educational plots...")
     }
 
-    # Selection bias plot
-    plots_list$selection_bias_plot <- plot_selection_bias(
+    # observed-confounding plot
+    plots_list$observed_confounding_plot <- plot_observed_confounding(
       baseline_results$results_table,
-      title = "Workshop: Selection Bias Demonstration"
+      title = "Workshop: Observed Confounding Demonstration"
     )
+    plots_list$selection_bias_plot <- plots_list$observed_confounding_plot
 
     # Heterogeneity distribution
     plots_list$heterogeneity_plot <- plot_heterogeneity_distribution(
@@ -168,7 +170,7 @@ run_workshop <- function(n = 1000,
     cli::cli_alert_success("All analyses completed successfully!")
     cli::cli_alert_info("Explore results using: workshop_results$baseline_results, workshop_results$causal_forest_results")
     if (include_plots) {
-      cli::cli_alert_info("View plots using: workshop_results$selection_bias_plot, workshop_results$heterogeneity_plot")
+      cli::cli_alert_info("View plots using: workshop_results$observed_confounding_plot, workshop_results$heterogeneity_plot")
     }
   }
 

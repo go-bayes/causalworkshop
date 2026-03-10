@@ -2,7 +2,7 @@
 % Please edit documentation in R/workshop_baseline.R
 \name{workshop_baseline_adjustment}
 \alias{workshop_baseline_adjustment}
-\title{Workshop: Baseline Adjustment for Selection Bias}
+\title{Workshop: Baseline Adjustment for Observed Confounding}
 \usage{
 workshop_baseline_adjustment(
   data = NULL,
@@ -39,14 +39,20 @@ A list containing:
 }
 }
 \description{
-Demonstrates the importance of baseline adjustment in addressing selection
-bias in observational studies. Compares naive estimates with adjusted estimates.
+Demonstrates how baseline covariate adjustment can reduce bias from observed
+pre-treatment confounding in observational studies. Compares naive estimates
+with adjusted estimates.
 }
 \details{
 This function demonstrates a key principle in causal inference: the importance
 of adjusting for baseline confounders. It shows how naive estimates (simple
-differences in means) can be severely biased due to selection effects, and
-how baseline adjustment can reduce this bias.
+differences in means) can be severely biased when treatment assignment depends
+on observed pre-treatment variables, and how baseline adjustment can reduce
+that bias.
+
+This is a demonstration of bias reduction under adjustment for measured
+baseline covariates. It does not, by itself, solve unmeasured confounding,
+collider bias, missing-data bias, or other broader forms of selection bias.
 
 The function:
 \enumerate{

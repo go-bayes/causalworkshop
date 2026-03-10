@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>workshop_results<span class="sc">$</span>causal_forest_results<span class="sc">$</span>heterogeneity_stats</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Display educational plots</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>workshop_results<span class="sc">$</span>selection_bias_plot</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>workshop_results<span class="sc">$</span>observed_confounding_plot</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>workshop_results<span class="sc">$</span>heterogeneity_plot</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>workshop_results<span class="sc">$</span>targeting_plots<span class="sc">$</span>rate_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
@@ -190,9 +190,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Simulate realistic data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">simulate_religious_data</span>(<span class="at">n =</span> <span class="dv">2000</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Demonstrate selection bias</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Compare naive and baseline-adjusted estimates</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>baseline_results <span class="ot">&lt;-</span> <span class="fu">workshop_baseline_adjustment</span>(data)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_selection_bias</span>(baseline_results<span class="sc">$</span>results_table)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_observed_confounding</span>(baseline_results<span class="sc">$</span>results_table)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Estimate heterogeneous treatment effects</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>cf_results <span class="ot">&lt;-</span> <span class="fu">workshop_causal_forest</span>(data)</span>
@@ -207,9 +207,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="workshop-content" class="level2">
 <h2 class="anchored" data-anchor-id="workshop-content">Workshop Content</h2>
 <section id="module-1-selection-bias-and-baseline-adjustment" class="level3">
-<h3 class="anchored" data-anchor-id="module-1-selection-bias-and-baseline-adjustment">Module 1: Selection Bias and Baseline Adjustment</h3>
-<p>Learn why naive comparisons fail in observational studies and how baseline adjustment addresses selection bias.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrates selection bias</span></span>
+<h3 class="anchored" data-anchor-id="module-1-selection-bias-and-baseline-adjustment">Module 1: Observed Confounding and Baseline Adjustment</h3>
+<p>Learn why naive comparisons fail in observational studies and how baseline adjustment can reduce bias from observed pre-treatment confounding.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstrates bias from observed confounding</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>baseline_results <span class="ot">&lt;-</span> <span class="fu">workshop_baseline_adjustment</span>()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>baseline_results<span class="sc">$</span>bias_reduction  <span class="co"># Quantifies improvement</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>

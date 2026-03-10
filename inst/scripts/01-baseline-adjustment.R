@@ -1,5 +1,5 @@
 # Religious Belief and Prosocial Behaviour: Baseline Adjustment
-# Demonstrates selection bias and covariate adjustment in causal inference
+# Demonstrates observed confounding and covariate adjustment in causal inference
 # Author: Joseph Bulbulia, Victoria University of Wellington
 
 library(cli)

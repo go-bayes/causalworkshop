@@ -75,7 +75,8 @@ The data-generating process follows a three-wave panel design:
 Personality traits and demographics are drawn independently. Income and
 deprivation depend on education and age.
 \item \strong{Wave 1 (exposure):} Binary exposures are assigned via logistic models
-that depend on baseline confounders, creating realistic selection bias.
+that depend on baseline confounders, creating realistic observed confounding
+in treatment assignment.
 Outcome values drift slightly from baseline.
 \item \strong{Wave 2 (outcome):} Outcomes are generated as a function of baseline
 values plus heterogeneous treatment effects of wave-1 exposures.

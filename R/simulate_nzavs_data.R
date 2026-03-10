@@ -66,7 +66,8 @@
 #'   Personality traits and demographics are drawn independently. Income and
 #'   deprivation depend on education and age.
 #' - **Wave 1 (exposure):** Binary exposures are assigned via logistic models
-#'   that depend on baseline confounders, creating realistic selection bias.
+#'   that depend on baseline confounders, creating realistic observed
+#'   confounding in treatment assignment.
 #'   Outcome values drift slightly from baseline.
 #' - **Wave 2 (outcome):** Outcomes are generated as a function of baseline
 #'   values plus heterogeneous treatment effects of wave-1 exposures.
@@ -157,7 +158,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
     -0.80 + 0.20 * agreeableness + 0.15 * conscientiousness + 0.10 * openness
   ))
 
-  # ---- wave 1: exposure assignment (selection bias) ----
+  # ---- wave 1: exposure assignment (observed confounding) ----
 
   # community group participation (depends on confounders)
   p_community <- stats::plogis(

@@ -31,7 +31,8 @@ A list containing results from all workshop modules:
 \item{causal_forest_results}{Results from causal forest analysis}
 \item{targeting_plots}{Rate and Qini curve visualizations (if requested)}
 \item{heterogeneity_plot}{Treatment effect distribution plot (if requested)}
-\item{selection_bias_plot}{Selection bias demonstration plot (if requested)}
+\item{observed_confounding_plot}{Observed-confounding demonstration plot (if requested)}
+\item{selection_bias_plot}{Backward-compatible alias for observed_confounding_plot}
 }
 }
 \description{
@@ -41,8 +42,8 @@ from baseline adjustment through advanced targeting analysis.
 \details{
 This function provides a complete educational workflow covering:
 \enumerate{
-\item \strong{Data Simulation}: Realistic data with selection bias and heterogeneous effects
-\item \strong{Baseline Adjustment}: Demonstrates importance of controlling for confounders
+\item \strong{Data Simulation}: Realistic data with observed confounding and heterogeneous effects
+\item \strong{Baseline Adjustment}: Demonstrates bias reduction after controlling for measured pre-treatment confounders
 \item \strong{Causal Forests}: Estimates individual treatment effects τ(x)
 \item \strong{Targeting Analysis}: Evaluates policy targeting using Rate and Qini curves
 \item \strong{Visualization}: Creates publication-ready plots for all analyses
@@ -64,6 +65,7 @@ workshop_results$causal_forest_results$heterogeneity_stats
 
 # Display plots
 workshop_results$targeting_plots$rate_plot
+workshop_results$observed_confounding_plot
 workshop_results$heterogeneity_plot
 
 # Run with custom parameters

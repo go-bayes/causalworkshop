@@ -38,18 +38,19 @@ workshop_results <- run_workshop(n = 30000)
 # inspect
 workshop_results$baseline_results$results_table
 workshop_results$causal_forest_results$heterogeneity_stats
+workshop_results$observed_confounding_plot
 workshop_results$targeting_plots$rate_plot
 ```
 
 ### Step by step
 
 ```r
-# 1. simulate data with selection bias and heterogeneous effects
+# 1. simulate data with observed confounding and heterogeneous effects
 data <- simulate_religious_data(n = 2000)
 
-# 2. demonstrate selection bias vs baseline adjustment
+# 2. compare naive estimates with baseline-adjusted estimates
 baseline_results <- workshop_baseline_adjustment(data)
-plot_selection_bias(baseline_results$results_table)
+plot_observed_confounding(baseline_results$results_table)
 
 # 3. estimate conditional average treatment effects
 cf_results <- workshop_causal_forest(data)
@@ -65,7 +66,7 @@ targeting_plots$qini_plot
 
 | Function | Purpose |
 |----------|---------|
-| `simulate_religious_data()` | Selection bias and heterogeneous treatment effects (religious belief on prosocial outcomes) |
+| `simulate_religious_data()` | Observed confounding and heterogeneous treatment effects (religious belief on prosocial outcomes) |
 | `simulate_nzavs_data()` | Three-wave panel data with multiple exposures, outcomes, confounders, and known ground-truth effects |
 | `simulate_nonlinear_data()` | Randomised treatment with a non-linear treatment effect surface for comparing estimation methods |
 | `simulate_measurement_items()` | Six-item distress scale with known measurement non-invariance across groups |
@@ -78,7 +79,7 @@ targeting_plots$qini_plot
 | `workshop_baseline_adjustment()` | Compare naive vs covariate-adjusted estimates against known treatment effects |
 | `workshop_causal_forest()` | Fit a causal forest and return predictions, heterogeneity statistics, and variable importance |
 | `compare_ate_methods()` | Fit OLS, polynomial, GAM, and causal forest side by side on non-linear data |
-| `plot_selection_bias()` | Visualise naive vs adjusted estimates against truth |
+| `plot_observed_confounding()` | Visualise naive vs adjusted estimates against truth |
 | `plot_heterogeneity_distribution()` | Distribution of individual treatment effect predictions |
 | `plot_rate_qini_curves()` | RATE and Qini targeting curves for evaluating treatment prioritisation |
 

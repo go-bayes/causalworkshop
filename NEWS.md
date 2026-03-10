@@ -43,7 +43,7 @@
 ## Scripts Now Included
 
 * 00-setup-verification.R - Environment setup verification
-* 01-baseline-adjustment.R - Foundation concepts and selection bias
+* 01-baseline-adjustment.R - Foundation concepts and observed confounding
 * 02-causal-forest-analysis.R - Core causal forest methodology
 * 03-rate-qini-curves.R - Targeting performance evaluation
 * 04-policy-trees.R - Decision rule learning
@@ -122,7 +122,7 @@
 
 ## Scripts Included
 
-* `01-baseline-adjustment.R` - Foundation concepts: selection bias and covariate adjustment
+* `01-baseline-adjustment.R` - Foundation concepts: observed confounding and covariate adjustment
 * `02-causal-forest-analysis.R` - Core methodology: basic causal forest implementation with GRF
 * `03-rate-qini-curves.R` - Performance evaluation: Rate and Qini curve analysis for targeting
 * `04-policy-trees.R` - Decision rules: policy tree learning for treatment assignment

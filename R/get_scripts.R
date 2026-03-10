@@ -12,7 +12,7 @@
 #'
 #' @details
 #' This function copies the complete set of workshop scripts:
-#' - 01-baseline-adjustment.R: Demonstrates selection bias and covariate adjustment
+#' - 01-baseline-adjustment.R: Demonstrates observed confounding and covariate adjustment
 #' - 02-causal-forest-analysis.R: Basic causal forest implementation
 #' - 03-rate-qini-curves.R: Targeting performance evaluation
 #' - 04-policy-trees.R: Policy tree learning and interpretation
@@ -112,7 +112,7 @@ list_workshop_scripts <- function() {
       "07-grf-style-simulation.R"
     ),
     Description = c(
-      "Demonstrates selection bias and baseline covariate adjustment",
+      "Demonstrates observed confounding and baseline covariate adjustment",
       "Basic causal forest implementation with GRF",
       "Rate and Qini curve analysis for targeting evaluation",
       "Policy tree learning for treatment assignment rules",

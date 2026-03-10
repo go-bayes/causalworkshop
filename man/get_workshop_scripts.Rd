@@ -23,7 +23,7 @@ through advanced margot workflow analysis.
 \details{
 This function copies the complete set of workshop scripts:
 \itemize{
-\item 01-baseline-adjustment.R: Demonstrates selection bias and covariate adjustment
+\item 01-baseline-adjustment.R: Demonstrates observed confounding and covariate adjustment
 \item 02-causal-forest-analysis.R: Basic causal forest implementation
 \item 03-rate-qini-curves.R: Targeting performance evaluation
 \item 04-policy-trees.R: Policy tree learning and interpretation

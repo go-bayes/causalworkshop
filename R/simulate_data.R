@@ -2,14 +2,14 @@
 #'
 #' Generates realistic simulated data for studying causal effects of religious
 #' belief on prosocial outcomes. Creates correlated baseline measures with
-#' selection bias and heterogeneous treatment effects.
+#' observed confounding and heterogeneous treatment effects.
 #'
 #' @param n Integer. Sample size (default: 1000)
 #' @param seed Integer. Random seed for reproducibility (default: 2025)
 #' @param heterogeneous_effects Logical. Whether to include heterogeneous
 #'   treatment effects (default: TRUE)
-#' @param strong_selection Logical. Whether to include strong selection bias
-#'   (default: TRUE)
+#' @param strong_selection Logical. Whether treatment assignment should depend
+#'   strongly on observed baseline covariates (default: TRUE)
 #'
 #' @return A tibble with simulated data including:
 #'   \describe{
@@ -23,13 +23,13 @@
 #' @details
 #' This function simulates realistic data with:
 #' - Correlated baseline characteristics
-#' - Selection bias (religious people differ systematically)
+#' - Treatment assignment that depends on baseline covariates
 #' - Heterogeneous treatment effects (effects vary by individual characteristics)
 #' - Realistic outcome distributions
 #'
 #' The simulation is designed for educational purposes to demonstrate:
-#' - Selection bias in observational studies
-#' - Importance of baseline adjustment
+#' - Bias from observed pre-treatment confounding in observational studies
+#' - How baseline adjustment can reduce bias under measured confounding
 #' - Heterogeneous treatment effects
 #' - Policy targeting applications
 #'
@@ -58,7 +58,7 @@ simulate_religious_data <- function(n = 1000, seed = 2025,
   X <- matrix(stats::rnorm(n * 5), n, 5)
   colnames(X) <- c("age", "education", "income", "baseline_charity", "baseline_volunteer")
 
-  # Create selection mechanism for treatment assignment
+  # Create treatment assignment mechanism from observed baseline covariates
   if (strong_selection) {
     propensity_score <- stats::plogis(
       0.2 * X[,1] - 0.3 * X[,2] + 0.4 * X[,4] + stats::rnorm(n)

@@ -1,7 +1,8 @@
-#' Workshop: Baseline Adjustment for Selection Bias
+#' Workshop: Baseline Adjustment for Observed Confounding
 #'
-#' Demonstrates the importance of baseline adjustment in addressing selection
-#' bias in observational studies. Compares naive estimates with adjusted estimates.
+#' Demonstrates how baseline covariate adjustment can reduce bias from observed
+#' pre-treatment confounding in observational studies. Compares naive estimates
+#' with adjusted estimates.
 #'
 #' @param data A data frame with treatment, outcome, and baseline variables.
 #'   If NULL, simulates data using \code{simulate_religious_data()}.
@@ -24,8 +25,13 @@
 #' @details
 #' This function demonstrates a key principle in causal inference: the importance
 #' of adjusting for baseline confounders. It shows how naive estimates (simple
-#' differences in means) can be severely biased due to selection effects, and
-#' how baseline adjustment can reduce this bias.
+#' differences in means) can be severely biased when treatment assignment depends
+#' on observed pre-treatment variables, and how baseline adjustment can reduce
+#' that bias.
+#'
+#' This is a demonstration of bias reduction under adjustment for measured
+#' baseline covariates. It does not, by itself, solve unmeasured confounding,
+#' collider bias, missing-data bias, or other broader forms of selection bias.
 #'
 #' The function:
 #' 1. Fits naive models (outcome ~ treatment)
@@ -53,7 +59,7 @@ workshop_baseline_adjustment <- function(data = NULL,
                                        verbose = TRUE) {
 
   if (verbose) {
-    cli::cli_rule("Workshop: Baseline Adjustment for Selection Bias")
+    cli::cli_rule("Workshop: Baseline Adjustment for Observed Confounding")
   }
 
   # Generate data if not provided
@@ -77,12 +83,12 @@ workshop_baseline_adjustment <- function(data = NULL,
     outcome <- outcome_vars[i]
     baseline <- baseline_vars[i]
 
-    # Naive estimation (biased due to selection)
+    # naive estimation ignores measured baseline confounders
     naive_formula <- stats::as.formula(paste(outcome, "~", treatment_var))
     naive_model <- stats::lm(naive_formula, data = data)
     naive_estimate <- stats::coef(naive_model)[treatment_var]
 
-    # Baseline-adjusted estimation
+    # adjusted estimation conditions on measured baseline covariates
     adjusted_formula <- stats::as.formula(paste(outcome, "~", treatment_var, "+", baseline))
     adjusted_model <- stats::lm(adjusted_formula, data = data)
     adjusted_estimate <- stats::coef(adjusted_model)[treatment_var]
@@ -112,7 +118,7 @@ workshop_baseline_adjustment <- function(data = NULL,
     cli::cli_alert_success("Average bias reduction: {round(bias_reduction, 3)}")
 
     if (bias_reduction > 0) {
-      cli::cli_alert_success("Baseline adjustment successfully reduced bias")
+      cli::cli_alert_success("Baseline adjustment successfully reduced observed-confounding bias")
     } else {
       cli::cli_alert_warning("Baseline adjustment did not reduce bias")
     }

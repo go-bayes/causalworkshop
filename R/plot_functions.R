@@ -208,10 +208,11 @@ plot_heterogeneity_distribution <- function(data, tau_var = "tau_hat",
 }
 
 
-#' Plot Selection Bias Demonstration
+#' Plot Observed Confounding Demonstration
 #'
 #' Creates side-by-side plots showing naive vs baseline-adjusted estimates
-#' to demonstrate the importance of controlling for confounders.
+#' to demonstrate how baseline adjustment can reduce bias from observed
+#' pre-treatment confounding.
 #'
 #' @param results_table A tibble with estimation results from workshop_baseline_adjustment
 #' @param title Character. Plot title
@@ -220,10 +221,11 @@ plot_heterogeneity_distribution <- function(data, tau_var = "tau_hat",
 #'
 #' @examples
 #' baseline_results <- workshop_baseline_adjustment()
-#' plot_selection_bias(baseline_results$results_table)
+#' plot_observed_confounding(baseline_results$results_table)
 #'
 #' @export
-plot_selection_bias <- function(results_table, title = "Selection Bias and Baseline Adjustment") {
+plot_observed_confounding <- function(results_table,
+                                      title = "Observed Confounding and Baseline Adjustment") {
 
   plot_data <- results_table |>
     tidyr::pivot_longer(
@@ -261,4 +263,24 @@ plot_selection_bias <- function(results_table, title = "Selection Bias and Basel
     )
 
   return(p)
+}
+
+
+#' Plot Selection Bias Demonstration
+#'
+#' Backward-compatible wrapper for \code{plot_observed_confounding()}.
+#'
+#' @param results_table A tibble with estimation results from workshop_baseline_adjustment
+#' @param title Character. Plot title
+#'
+#' @return A ggplot object
+#'
+#' @examples
+#' baseline_results <- workshop_baseline_adjustment()
+#' plot_selection_bias(baseline_results$results_table)
+#'
+#' @export
+plot_selection_bias <- function(results_table,
+                                title = "Observed Confounding and Baseline Adjustment") {
+  plot_observed_confounding(results_table = results_table, title = title)
 }
