@@ -10,17 +10,17 @@ test_that("NZAVS data -> causal forest -> ATE close to ground truth", {
   d1 <- d[d$wave == 1, ]
   d2 <- d[d$wave == 2, ]
 
-  true_ate <- mean(d0$tau_community_wellbeing)
+  true_ate <- mean(d0$tau_community_purpose)
 
   # construct matrices
   covariate_cols <- c(
     "age", "male", "nz_european", "education", "partner", "employed",
     "log_income", "nz_dep", "agreeableness", "conscientiousness",
     "extraversion", "neuroticism", "openness",
-    "community_group", "wellbeing"
+    "community_group", "purpose"
   )
   X <- as.matrix(d0[, covariate_cols])
-  Y <- d2$wellbeing
+  Y <- d2$purpose
   W <- d1$community_group
 
   cf <- grf::causal_forest(
@@ -46,10 +46,10 @@ test_that("causal forest predictions -> RATE curve has expected shape", {
     "age", "male", "nz_european", "education", "partner", "employed",
     "log_income", "nz_dep", "agreeableness", "conscientiousness",
     "extraversion", "neuroticism", "openness",
-    "community_group", "wellbeing"
+    "community_group", "purpose"
   )
   X <- as.matrix(d0[, covariate_cols])
-  Y <- d2$wellbeing
+  Y <- d2$purpose
   W <- d1$community_group
 
   cf <- grf::causal_forest(
@@ -85,10 +85,10 @@ test_that("policy tree produces valid predictions", {
     "age", "male", "nz_european", "education", "partner", "employed",
     "log_income", "nz_dep", "agreeableness", "conscientiousness",
     "extraversion", "neuroticism", "openness",
-    "community_group", "wellbeing"
+    "community_group", "purpose"
   )
   X <- as.matrix(d0[, covariate_cols])
-  Y <- d2$wellbeing
+  Y <- d2$purpose
   W <- d1$community_group
 
   cf <- grf::causal_forest(

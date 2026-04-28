@@ -1,4 +1,26 @@
+# causalworkshop 0.4.0
+
+## Outcome rename: wellbeing -> purpose
+
+* The candidate outcome formerly called `wellbeing` is renamed to `purpose`
+  (sense of purpose). The rename reflects the design principle that
+  "wellbeing" sits across multiple measurable constructs and is not itself a
+  single construct, whereas sense of purpose is a specific, measurable
+  positive-orientation construct.
+* Affected columns:
+  - Outcome column: `wellbeing` -> `purpose`
+  - Tau columns: `tau_community_wellbeing` -> `tau_community_purpose`,
+    `tau_religious_wellbeing` -> `tau_religious_purpose`,
+    `tau_volunteer_wellbeing` -> `tau_volunteer_purpose`
+* The data-generating coefficients are unchanged. The construct's substantive
+  orientation (higher = better) and its associations with extraversion,
+  partnership status, and neuroticism remain the same.
+* **Breaking change**: code that referenced `wellbeing` columns by name must
+  be updated to reference `purpose`.
+
 # causalworkshop 0.2.1
+
+## Non-Linear Misspecification Demo
 
 ## Non-Linear Misspecification Demo
 

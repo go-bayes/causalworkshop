@@ -44,7 +44,8 @@
 #'
 #'   **Candidate outcomes (Y):**
 #'   \describe{
-#'     \item{wellbeing}{Numeric. General psychological wellbeing.}
+#'     \item{purpose}{Numeric. Sense of purpose (positive orientation: higher
+#'       values reflect a stronger sense of purpose).}
 #'     \item{belonging}{Numeric. Sense of community belonging.}
 #'     \item{self_esteem}{Numeric. Self-esteem measure.}
 #'     \item{life_satisfaction}{Numeric. Life satisfaction measure.}
@@ -95,8 +96,8 @@
 #' d <- simulate_nzavs_data()
 #' dim(d)
 #'
-#' # check average treatment effect of community group on wellbeing
-#' mean(d$tau_community_wellbeing[d$wave == 0])
+#' # check average treatment effect of community group on sense of purpose
+#' mean(d$tau_community_purpose[d$wave == 0])
 #'
 #' # smaller dataset for testing
 #' d_small <- simulate_nzavs_data(n = 500, seed = 42)
@@ -134,7 +135,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
   openness <- stats::rnorm(n, 0, 1)
 
   # baseline outcome measures (pre-treatment values)
-  wellbeing_t0 <- 0.30 * extraversion - 0.40 * neuroticism +
+  purpose_t0 <- 0.30 * extraversion - 0.40 * neuroticism +
     0.20 * partner + 0.10 * log_income - 0.15 * nz_dep +
     stats::rnorm(n, 0, 0.60)
   belonging_t0 <- 0.20 * extraversion + 0.15 * agreeableness -
@@ -185,7 +186,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
   volunteer_t1 <- stats::rbinom(n, 1, p_volunteer)
 
   # outcomes at t1 (drift from baseline, no treatment effect yet)
-  wellbeing_t1 <- wellbeing_t0 + stats::rnorm(n, 0, 0.30)
+  purpose_t1 <- purpose_t0 + stats::rnorm(n, 0, 0.30)
   belonging_t1 <- belonging_t0 + stats::rnorm(n, 0, 0.30)
   self_esteem_t1 <- self_esteem_t0 + stats::rnorm(n, 0, 0.30)
   life_satisfaction_t1 <- life_satisfaction_t0 + stats::rnorm(n, 0, 0.30)
@@ -193,7 +194,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
   # ---- heterogeneous treatment effects ----
 
   # community_group -> outcomes
-  tau_community_wellbeing <- 0.20 + 0.10 * extraversion +
+  tau_community_purpose <- 0.20 + 0.10 * extraversion +
     0.05 * partner - 0.03 * neuroticism^2
   tau_community_belonging <- 0.30 + 0.08 * agreeableness +
     0.06 * extraversion
@@ -203,7 +204,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
     0.04 * extraversion
 
   # religious_service -> outcomes
-  tau_religious_wellbeing <- 0.12 + 0.06 * agreeableness -
+  tau_religious_purpose <- 0.12 + 0.06 * agreeableness -
     0.04 * openness
   tau_religious_belonging <- 0.25 + 0.10 * agreeableness +
     0.04 * conscientiousness
@@ -212,7 +213,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
     0.03 * partner
 
   # volunteer_work -> outcomes
-  tau_volunteer_wellbeing <- 0.15 + 0.08 * openness +
+  tau_volunteer_purpose <- 0.15 + 0.08 * openness +
     0.04 * conscientiousness
   tau_volunteer_belonging <- 0.20 + 0.06 * agreeableness +
     0.04 * openness
@@ -223,10 +224,10 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
 
   # ---- wave 2: outcomes (include causal effects of t1 exposures) ----
 
-  wellbeing_t2 <- wellbeing_t0 +
-    tau_community_wellbeing * community_t1 +
-    tau_religious_wellbeing * religious_t1 +
-    tau_volunteer_wellbeing * volunteer_t1 +
+  purpose_t2 <- purpose_t0 +
+    tau_community_purpose * community_t1 +
+    tau_religious_purpose * religious_t1 +
+    tau_volunteer_purpose * volunteer_t1 +
     stats::rnorm(n, 0, 0.50)
 
   belonging_t2 <- belonging_t0 +
@@ -255,7 +256,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
   # ---- assemble long panel ----
 
   # helper to build one wave
-  make_wave <- function(w, wellbeing, belonging, self_esteem, life_satisfaction,
+  make_wave <- function(w, purpose, belonging, self_esteem, life_satisfaction,
                         community, religious, volunteer, age_offset = 0L) {
     tibble::tibble(
       id = seq_len(n),
@@ -276,19 +277,19 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
       community_group = community,
       religious_service = religious,
       volunteer_work = volunteer,
-      wellbeing = wellbeing,
+      purpose = purpose,
       belonging = belonging,
       self_esteem = self_esteem,
       life_satisfaction = life_satisfaction,
-      tau_community_wellbeing = tau_community_wellbeing,
+      tau_community_purpose = tau_community_purpose,
       tau_community_belonging = tau_community_belonging,
       tau_community_self_esteem = tau_community_self_esteem,
       tau_community_life_satisfaction = tau_community_life_satisfaction,
-      tau_religious_wellbeing = tau_religious_wellbeing,
+      tau_religious_purpose = tau_religious_purpose,
       tau_religious_belonging = tau_religious_belonging,
       tau_religious_self_esteem = tau_religious_self_esteem,
       tau_religious_life_satisfaction = tau_religious_life_satisfaction,
-      tau_volunteer_wellbeing = tau_volunteer_wellbeing,
+      tau_volunteer_purpose = tau_volunteer_purpose,
       tau_volunteer_belonging = tau_volunteer_belonging,
       tau_volunteer_self_esteem = tau_volunteer_self_esteem,
       tau_volunteer_life_satisfaction = tau_volunteer_life_satisfaction
@@ -296,13 +297,13 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
   }
 
   data <- dplyr::bind_rows(
-    make_wave(0L, wellbeing_t0, belonging_t0, self_esteem_t0,
+    make_wave(0L, purpose_t0, belonging_t0, self_esteem_t0,
               life_satisfaction_t0, community_t0, religious_t0, volunteer_t0,
               age_offset = 0L),
-    make_wave(1L, wellbeing_t1, belonging_t1, self_esteem_t1,
+    make_wave(1L, purpose_t1, belonging_t1, self_esteem_t1,
               life_satisfaction_t1, community_t1, religious_t1, volunteer_t1,
               age_offset = 1L),
-    make_wave(2L, wellbeing_t2, belonging_t2, self_esteem_t2,
+    make_wave(2L, purpose_t2, belonging_t2, self_esteem_t2,
               life_satisfaction_t2, community_t2, religious_t2, volunteer_t2,
               age_offset = 2L)
   )
@@ -316,7 +317,7 @@ simulate_nzavs_data <- function(n = 5000, seed = 2026) {
     "Exposures: community_group, religious_service, volunteer_work"
   )
   cli::cli_alert_info(
-    "Outcomes: wellbeing, belonging, self_esteem, life_satisfaction"
+    "Outcomes: purpose, belonging, self_esteem, life_satisfaction"
   )
   cli::cli_alert_info("Ground-truth effects in tau_* columns")
 

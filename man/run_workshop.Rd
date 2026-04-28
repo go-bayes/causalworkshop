@@ -65,7 +65,6 @@ workshop_results$causal_forest_results$heterogeneity_stats
 
 # Display plots
 workshop_results$targeting_plots$rate_plot
-workshop_results$observed_confounding_plot
 workshop_results$heterogeneity_plot
 
 # Run with custom parameters

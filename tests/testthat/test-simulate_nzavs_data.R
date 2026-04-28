@@ -14,12 +14,12 @@ test_that("simulate_nzavs_data has correct column names", {
     "agreeableness", "conscientiousness", "extraversion", "neuroticism",
     "openness",
     "community_group", "religious_service", "volunteer_work",
-    "wellbeing", "belonging", "self_esteem", "life_satisfaction",
-    "tau_community_wellbeing", "tau_community_belonging",
+    "purpose", "belonging", "self_esteem", "life_satisfaction",
+    "tau_community_purpose", "tau_community_belonging",
     "tau_community_self_esteem", "tau_community_life_satisfaction",
-    "tau_religious_wellbeing", "tau_religious_belonging",
+    "tau_religious_purpose", "tau_religious_belonging",
     "tau_religious_self_esteem", "tau_religious_life_satisfaction",
-    "tau_volunteer_wellbeing", "tau_volunteer_belonging",
+    "tau_volunteer_purpose", "tau_volunteer_belonging",
     "tau_volunteer_self_esteem", "tau_volunteer_life_satisfaction"
   )
   expect_equal(names(d), expected_cols)
@@ -42,7 +42,7 @@ test_that("simulate_nzavs_data is reproducible with the same seed", {
 test_that("simulate_nzavs_data differs with different seeds", {
   d1 <- simulate_nzavs_data(n = 50, seed = 1)
   d2 <- simulate_nzavs_data(n = 50, seed = 2)
-  expect_false(identical(d1$wellbeing, d2$wellbeing))
+  expect_false(identical(d1$purpose, d2$purpose))
 })
 
 test_that("binary variables are 0/1", {
@@ -81,8 +81,8 @@ test_that("ATEs are in expected range", {
   d <- simulate_nzavs_data(n = 10000, seed = 2026)
   d0 <- d[d$wave == 0, ]
 
-  # community_group -> wellbeing: theoretical ATE ~0.20
-  ate <- mean(d0$tau_community_wellbeing)
+  # community_group -> purpose: theoretical ATE ~0.20
+  ate <- mean(d0$tau_community_purpose)
   expect_gt(ate, 0.15)
   expect_lt(ate, 0.25)
 
@@ -103,8 +103,8 @@ test_that("confounding is present (naive estimate biased)", {
   d1 <- d[d$wave == 1, ]
   d2 <- d[d$wave == 2, ]
 
-  true_ate <- mean(d0$tau_community_wellbeing)
-  naive <- coef(lm(d2$wellbeing ~ d1$community_group))[[2]]
+  true_ate <- mean(d0$tau_community_purpose)
+  naive <- coef(lm(d2$purpose ~ d1$community_group))[[2]]
   bias <- abs(naive - true_ate)
 
   # naive estimate should be substantially biased (> 0.10)
@@ -117,10 +117,10 @@ test_that("g-computation recovers true ATE", {
   d1 <- d[d$wave == 1, ]
   d2 <- d[d$wave == 2, ]
 
-  true_ate <- mean(d0$tau_community_wellbeing)
+  true_ate <- mean(d0$tau_community_purpose)
 
   df <- data.frame(
-    y = d2$wellbeing,
+    y = d2$purpose,
     a = d1$community_group,
     age = d0$age, male = d0$male, nz_european = d0$nz_european,
     education = d0$education, partner = d0$partner, employed = d0$employed,
@@ -128,13 +128,13 @@ test_that("g-computation recovers true ATE", {
     agreeableness = d0$agreeableness, conscientiousness = d0$conscientiousness,
     extraversion = d0$extraversion, neuroticism = d0$neuroticism,
     openness = d0$openness,
-    community_t0 = d0$community_group, wellbeing_t0 = d0$wellbeing
+    community_t0 = d0$community_group, purpose_t0 = d0$purpose
   )
 
   fit <- lm(y ~ a + age + male + nz_european + education + partner +
               employed + log_income + nz_dep + agreeableness +
               conscientiousness + extraversion + neuroticism + openness +
-              community_t0 + wellbeing_t0, data = df)
+              community_t0 + purpose_t0, data = df)
 
   df1 <- df0 <- df
   df1$a <- 1

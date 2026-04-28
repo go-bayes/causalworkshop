@@ -48,7 +48,8 @@ openness}{Numeric. Big Five personality traits (standardised).}
 
 \strong{Candidate outcomes (Y):}
 \describe{
-\item{wellbeing}{Numeric. General psychological wellbeing.}
+\item{purpose}{Numeric. Sense of purpose (positive orientation: higher
+values reflect a stronger sense of purpose).}
 \item{belonging}{Numeric. Sense of community belonging.}
 \item{self_esteem}{Numeric. Self-esteem measure.}
 \item{life_satisfaction}{Numeric. Life satisfaction measure.}
@@ -75,8 +76,8 @@ The data-generating process follows a three-wave panel design:
 Personality traits and demographics are drawn independently. Income and
 deprivation depend on education and age.
 \item \strong{Wave 1 (exposure):} Binary exposures are assigned via logistic models
-that depend on baseline confounders, creating realistic observed confounding
-in treatment assignment.
+that depend on baseline confounders, creating realistic observed
+confounding in treatment assignment.
 Outcome values drift slightly from baseline.
 \item \strong{Wave 2 (outcome):} Outcomes are generated as a function of baseline
 values plus heterogeneous treatment effects of wave-1 exposures.
@@ -108,8 +109,8 @@ estimates against ground truth.
 d <- simulate_nzavs_data()
 dim(d)
 
-# check average treatment effect of community group on wellbeing
-mean(d$tau_community_wellbeing[d$wave == 0])
+# check average treatment effect of community group on sense of purpose
+mean(d$tau_community_purpose[d$wave == 0])
 
 # smaller dataset for testing
 d_small <- simulate_nzavs_data(n = 500, seed = 42)
