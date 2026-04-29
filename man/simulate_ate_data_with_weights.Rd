@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulate_data.R
 \name{simulate_ate_data_with_weights}
 \alias{simulate_ate_data_with_weights}
-\title{Simulate Data for Average Treatment Effect with Sample Weights}
+\title{Simulate Data for Average Treatment Effect (ATE) with Sample Weights}
 \usage{
 simulate_ate_data_with_weights(
   n_sample = 10000,
@@ -17,33 +17,48 @@ simulate_ate_data_with_weights(
 )
 }
 \arguments{
-\item{n_sample}{Integer. Sample size (default: 10000)}
+\item{n_sample}{Integer. Sample size (default: 10000).}
 
-\item{n_population}{Integer. Population size for comparison (default: 100000)}
+\item{n_population}{Integer. Population size for comparison (default: 100000).}
 
-\item{p_z_sample}{Numeric. Probability of effect modifier in sample (default: 0.1)}
+\item{p_z_sample}{Numeric. Probability of the effect modifier in the
+sample (default: 0.1).}
 
-\item{p_z_population}{Numeric. Probability of effect modifier in population (default: 0.5)}
+\item{p_z_population}{Numeric. Probability of the effect modifier in the
+population (default: 0.5).}
 
-\item{beta_a}{Numeric. Treatment effect (default: 1)}
+\item{beta_a}{Numeric. Treatment effect (default: 1).}
 
-\item{beta_z}{Numeric. Effect modifier coefficient (default: 2.5)}
+\item{beta_z}{Numeric. Effect-modifier coefficient (default: 2.5).}
 
-\item{beta_az}{Numeric. Interaction effect (default: 0.5)}
+\item{beta_az}{Numeric. Interaction term capturing effect modification of
+treatment by the modifier (default: 0.5).}
 
-\item{noise_sd}{Numeric. Outcome noise standard deviation (default: 0.5)}
+\item{noise_sd}{Numeric. Outcome noise standard deviation (default: 0.5).}
 
-\item{seed}{Integer. Random seed (default: 12345)}
+\item{seed}{Integer. Random seed for reproducibility (default: 12345).
+Pass \code{NULL} to leave the seed untouched.}
 }
 \value{
-A list containing sample_data and population_data tibbles
+A list with two data frames: \code{sample_data} (\code{y_sample}, \code{a_sample},
+\code{z_sample}, \code{weights}) and \code{population_data} (\code{y_population},
+\code{a_population}, \code{z_population}).
 }
 \description{
-Generates simulated data for studying average treatment effects with
-sample weights to adjust for population differences.
+Generates simulated data for a sample and a population to study average
+treatment effects (ATE), considering the presence of an effect modifier.
+The sample and the population differ in the distribution of the effect
+modifier; the treatment effect and effect modification are held fixed.
+Inverse-probability sample weights are returned so that the sample can be
+reweighted to match the population.
+}
+\details{
+This function mirrors \code{margot::simulate_ate_data_with_weights()} exactly so
+that course materials remain consistent across packages.
 }
 \examples{
 data <- simulate_ate_data_with_weights()
 head(data$sample_data)
+head(data$population_data)
 
 }
