@@ -1,3 +1,26 @@
+# causalworkshop 0.5.0
+
+## Simulation guide helpers
+
+* **`simulate_ate_data_with_weights()`** is now aligned with
+  `margot::simulate_ate_data_with_weights()`. The list returned by the
+  function carries `sample_data` with columns `y_sample`, `a_sample`,
+  `z_sample`, `weights` and `population_data` with columns `y_population`,
+  `a_population`, `z_population`. The outcome includes both a main effect of
+  the modifier `z` and an interaction `a * z` (controlled by `beta_az`),
+  matching the `margot` reference implementation. The previous causalworkshop
+  signature returned tibbles with columns `y`, `treatment`, `effect_modifier`
+  and a different weight formula; **callers relying on those names must
+  update**.
+* **`simulate_mediation_example()`** is new. It generates cross-sectional
+  data in which `L` is a mediator on the path `A -> L -> Y`, used to
+  demonstrate that conditioning on a mediator blocks the very effect of
+  interest while omitting it recovers the total effect.
+* **`simulate_three_wave_panel()`** is new. It generates a synthetic
+  baseline-exposure-outcome panel with an unmeasured confounder `U`, used to
+  demonstrate confounding-control strategies and causal-forest estimation in
+  the PSYC 434 simulation guide. The true ATE is `delta_A1` (default 0.3).
+
 # causalworkshop 0.4.0
 
 ## Outcome rename: wellbeing -> purpose
