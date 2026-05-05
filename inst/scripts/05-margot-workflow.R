@@ -46,7 +46,7 @@ if (packageVersion("margot") < "1.0.233") {
 }
 
 # install additional packages if missing
-required_packages <- c("qs", "here", "data.table", "kableExtra", "doParallel", "patchwork")
+required_packages <- c("arrow", "qs2", "here", "data.table", "kableExtra", "doParallel", "patchwork")
 for (pkg in required_packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     install.packages(pkg)
@@ -54,7 +54,7 @@ for (pkg in required_packages) {
 }
 
 # load required libraries
-library(qs)
+library(arrow)
 library(here)
 library(data.table)
 library(kableExtra)
@@ -128,9 +128,9 @@ here_save(label_mapping, "label_mapping", dir_results)
 cli_rule("Causal Forest Estimation with Sample Splitting")
 
 # check if models already exist
-if (file.exists(file.path(dir_results, "models_binary_cate.qs"))) {
+if (file.exists(file.path(dir_results, "models_binary_cate.parquet"))) {
   cli_alert_info("Loading existing causal forest models...")
-   models_binary_cate <- margot::here_read_qs("models_binary_cate", dir_results)
+   models_binary_cate <- margot::here_read_arrow("models_binary_cate", dir_results)
 } else {
   cli_alert_info("Fitting causal forests with honest sample splitting...")
 models_binary_cate <- margot::margot_causal_forest(
@@ -149,7 +149,7 @@ models_binary_cate <- margot::margot_causal_forest(
     )
 
   # save models
-  margot::here_save_qs(models_binary_cate,  "models_binary_cate", dir_results)
+  margot::here_save_arrow(models_binary_cate, "models_binary_cate", dir_results)
   cli_alert_success("Causal forest models saved")
 }
 
