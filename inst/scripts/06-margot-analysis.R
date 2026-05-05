@@ -52,7 +52,7 @@ original_df <- read_cached(
 
 models_binary_cate <- read_cached(
   "models_binary_cate",
-  reader = margot::here_read_qs,
+  reader = margot::here_read_arrow,
   dir_path = results_dir
 )
 
@@ -64,7 +64,7 @@ label_mapping <- read_cached(
 
 # Optional flipped results
 models_binary_flipped <- tryCatch(
-  margot::here_read_qs("models_binary_flipped_all", dir_path = results_dir),
+  margot::here_read_arrow("models_binary_flipped_all", dir_path = results_dir),
   error = function(e) NULL
 )
 flip_outcomes <- tryCatch(
@@ -283,8 +283,8 @@ if (!requireNamespace("fastpolicytree", quietly = TRUE)) {
   )
 
   if (!is.null(policy_tree_result_stability)) {
-    margot::here_save_qs(policy_tree_result_stability, "policy_tree_result_stability", results_dir)
-    cli_alert_success("Stability results saved to results/policy_tree_result_stability.qs")
+    margot::here_save_arrow(policy_tree_result_stability, "policy_tree_result_stability", results_dir)
+    cli_alert_success("Stability results saved to results/policy_tree_result_stability.parquet")
 
     policy_workflow <- tryCatch(
       margot::margot_policy_workflow(

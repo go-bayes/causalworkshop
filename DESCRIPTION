@@ -26,12 +26,15 @@ Imports:
     tibble,
     tidyr
 Suggests:
+    arrow,
+    googledrive,
     lavaan,
     margot,
     mgcv,
     policytree,
     fastpolicytree,
     knitr,
+    qs2,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr

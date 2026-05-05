@@ -21,7 +21,8 @@ cran_packages <- c(
   "knitr",         # Document generation
   "margot",        # Causal inference workflows
   "purrr",         # Functional programming
-  "qs",            # Fast serialization
+  "arrow",         # Columnar storage (parquet)
+  "qs2",           # Fast serialization (margot envelope payload)
   "rmarkdown",     # R Markdown documents
   "scales",        # Scale functions for ggplot2
   "tibble",        # Modern data frames
