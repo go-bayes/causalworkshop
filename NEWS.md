@@ -1,3 +1,58 @@
+# causalworkshop 0.6.0
+
+## Cache loaders for PSYC 434
+
+* **`load_lab_09_cache()`** is new. Downloads the pre-fitted Lab 9
+  artefacts (multi-outcome causal forest, policy-tree stability,
+  policy workflow) from a public Google Drive zip, caches them in
+  `tools::R_user_dir("psyc434", which = "cache")`, and returns them
+  as a named list. Replaces the standalone `scripts/lab-09-cache.R`
+  that previously lived in the 26-434 repo, so consumers no longer
+  need a local `scripts/` folder or a working directory anchored at
+  the repo root.
+* **`load_option_a_cache()`** is new. Same shape as
+  `load_lab_09_cache()`, parameterised by exposure
+  (`"religious_service"` or `"volunteer_work"`).
+
+## Local-fit alternative
+
+* **`fit_lab_09()`** and **`fit_option_a()`** are new. Refit the
+  Lab 9 / Option A cache locally via `simulate_nzavs_data()` and
+  `margot::margot_causal_forest()`, returning the same list shape
+  as the cache loaders. Use these when you would rather not
+  deserialise a third-party Drive blob, or to test a change to the
+  simulator. Default settings take ~10-25 min on an M-series laptop;
+  `n_iterations` and `num_trees` can be tuned down for a quicker
+  sanity check.
+* The cache loaders accept `refit = TRUE` as a one-line opt-in to
+  the local-fit path:
+
+    ```r
+    cache <- causalworkshop::load_lab_09_cache(refit = TRUE)
+    ```
+
+## Serialisation: `qs` -> `arrow` + `qs2`
+
+* Cache I/O switched from `qs` to `margot::here_save_arrow()` /
+  `here_read_arrow()`, which writes parquet for tabular objects and
+  a `qs2`-payload "margot envelope" parquet for non-tabular ones.
+  Motivation: `qs` is broken on R 4.6.
+* DESCRIPTION gains `arrow`, `qs2`, and `googledrive` in `Suggests`.
+* Workshop companion scripts under `inst/scripts/`,
+  `workshop-scripts/`, and `my-workshop/` no longer reference `qs`.
+
+## Migration
+
+* Consumers should require `causalworkshop >= 0.6.0` and call the
+  loader directly:
+
+    ```r
+    cache <- causalworkshop::load_lab_09_cache()
+    ```
+
+  The previous pattern (`source("scripts/lab-09-cache.R")`) no
+  longer works.
+
 # causalworkshop 0.5.0
 
 ## Simulation guide helpers
