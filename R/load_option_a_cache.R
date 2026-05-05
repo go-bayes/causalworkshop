@@ -12,6 +12,11 @@
 #'   on disk. Defaults to a per-user location under
 #'   [tools::R_user_dir()].
 #' @param refresh If `TRUE`, re-download the selected cache.
+#' @param refit If `TRUE`, skip the Drive download and refit locally via
+#'   [fit_option_a()]. Use this when you would prefer not to deserialise
+#'   a third-party blob, or to test a change to the simulator. Default
+#'   settings take ~10-25 min on an M-series laptop.
+#' @param ... Forwarded to [fit_option_a()] when `refit = TRUE`.
 #'
 #' @return A named list with elements `models_binary`,
 #'   `policy_tree_stability`, `policy_workflow`, `cache_dir`, and
@@ -31,11 +36,16 @@
 load_option_a_cache <- function(
   exposure = c("religious_service", "volunteer_work"),
   cache_root = tools::R_user_dir("psyc434", which = "cache"),
-  refresh = FALSE
+  refresh = FALSE,
+  refit = FALSE,
+  ...
 ) {
+  exposure <- match.arg(exposure)
+  if (isTRUE(refit)) {
+    return(fit_option_a(exposure = exposure, ...))
+  }
   .ensure_arrow_stack()
 
-  exposure <- match.arg(exposure)
   meta <- .option_a_meta(exposure)
 
   expected_files <- c(

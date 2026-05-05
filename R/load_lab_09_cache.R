@@ -16,6 +16,11 @@
 #'   Defaults to a per-user location returned by [tools::R_user_dir()].
 #' @param refresh If `TRUE`, re-download the cache even if it is already
 #'   on disk.
+#' @param refit If `TRUE`, skip the Drive download and refit the cache
+#'   locally via [fit_lab_09()]. Use this when you would prefer not to
+#'   deserialise a third-party blob, or to test a change to the
+#'   simulator. Default settings take ~10-25 min on an M-series laptop.
+#' @param ... Forwarded to [fit_lab_09()] when `refit = TRUE`.
 #'
 #' @return A named list with elements `models_binary`,
 #'   `policy_tree_stability`, `policy_workflow`, and `cache_dir`.
@@ -35,8 +40,13 @@
 load_lab_09_cache <- function(
   url = .lab_09_cache_url(),
   cache_dir = tools::R_user_dir("psyc434", which = "cache"),
-  refresh = FALSE
+  refresh = FALSE,
+  refit = FALSE,
+  ...
 ) {
+  if (isTRUE(refit)) {
+    return(fit_lab_09(...))
+  }
   .ensure_arrow_stack()
 
   expected_files <- c(
