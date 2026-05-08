@@ -1,8 +1,17 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^save_directory$
 ^save_directory/
+^quarto$
 ^quarto/
+^bibliography$
 ^bibliography/
+^csl$
 ^csl/
+^nzi-cli$
+^nzi-cli/
+^docs$
+^docs/
 ^README\.html$
+^README_files$
 ^README_files/

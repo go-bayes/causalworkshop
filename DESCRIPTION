@@ -12,7 +12,7 @@ License: MIT + file LICENSE.md
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Depends: 
-    R (>= 4.0.0)
+    R (>= 4.1.0)
 Imports:
     cli,
     dplyr,
@@ -37,6 +37,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-URL: https://github.com/go-bayes/causalworkshop
+URL: https://go-bayes.github.io/causalworkshop/,
+    https://github.com/go-bayes/causalworkshop
 BugReports: https://github.com/go-bayes/causalworkshop/issues
 RoxygenNote: 7.3.3
