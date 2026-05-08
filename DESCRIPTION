@@ -40,4 +40,4 @@ VignetteBuilder: knitr
 URL: https://go-bayes.github.io/causalworkshop/,
     https://github.com/go-bayes/causalworkshop
 BugReports: https://github.com/go-bayes/causalworkshop/issues
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
