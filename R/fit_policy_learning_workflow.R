@@ -1,7 +1,7 @@
-#' Fit the Lab 9 cache locally
+#' Fit the PSYC 434 policy-learning workflow locally
 #'
-#' Refits the Lab 9 multi-outcome causal forest, policy-tree stability
-#' check, and policy workflow on the caller's machine, returning the
+#' Refits the policy-learning multi-outcome causal forest,
+#' policy-tree stability check, and policy workflow on the caller's machine, returning the
 #' same list shape as [load_policy_learning_cache()]. Use this when you would
 #' rather not deserialise the author's pre-fitted artefacts from Google
 #' Drive — for example, if you would prefer not to run
@@ -25,14 +25,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' cache <- fit_lab_09()
+#' cache <- fit_policy_learning_workflow()
 #' # equivalent to causalworkshop::load_policy_learning_cache(refit = TRUE)
 #' }
 #'
 #' @seealso [load_policy_learning_cache()] for the Drive-hosted alternative.
 #'
 #' @export
-fit_lab_09 <- function(
+fit_policy_learning_workflow <- function(
   n = 5000,
   seed = 2026,
   n_iterations = 100,
@@ -48,4 +48,21 @@ fit_lab_09 <- function(
     parallel = parallel
   )
   c(out, list(cache_dir = NA_character_))
+}
+
+#' Fit the Lab 9 cache locally
+#'
+#' `fit_lab_09()` is soft-deprecated. Use
+#' [fit_policy_learning_workflow()] instead.
+#'
+#' @inheritParams fit_policy_learning_workflow
+#' @inherit fit_policy_learning_workflow return
+#' @export
+fit_lab_09 <- function(...) {
+  warning(
+    "`fit_lab_09()` is soft-deprecated; ",
+    "use `fit_policy_learning_workflow()` instead.",
+    call. = FALSE
+  )
+  fit_policy_learning_workflow(...)
 }

@@ -17,10 +17,10 @@
 #' @param refresh If `TRUE`, re-download the cache even if it is already
 #'   on disk.
 #' @param refit If `TRUE`, skip the Drive download and refit the cache
-#'   locally via [fit_lab_09()]. Use this when you would prefer not to
+#'   locally via [fit_policy_learning_workflow()]. Use this when you would prefer not to
 #'   deserialise a third-party blob, or to test a change to the
 #'   simulator. Default settings take ~10-25 min on an M-series laptop.
-#' @param ... Forwarded to [fit_lab_09()] when `refit = TRUE`.
+#' @param ... Forwarded to [fit_policy_learning_workflow()] when `refit = TRUE`.
 #'
 #' @return A named list with elements `models_binary`,
 #'   `policy_tree_stability`, `policy_workflow`, and `cache_dir`.
@@ -45,7 +45,7 @@ load_policy_learning_cache <- function(
   ...
 ) {
   if (isTRUE(refit)) {
-    return(fit_lab_09(...))
+    return(fit_policy_learning_workflow(...))
   }
   .ensure_arrow_stack()
 
@@ -82,7 +82,7 @@ load_policy_learning_cache <- function(
       stop(
         "no cache URL configured. set PSYC434_POLICY_LEARNING_CACHE_URL ",
         "to a Google Drive share URL of lab-09-cache.zip, or update the ",
-        "default in causalworkshop's R/load_lab_09_cache.R."
+        "default in causalworkshop's R/load_policy_learning_cache.R."
       )
     }
     file_id <- .gdrive_file_id(url)

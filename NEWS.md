@@ -1,3 +1,15 @@
+# causalworkshop 0.6.2
+
+## Workflow naming
+
+* **`fit_policy_learning_workflow()`** replaces the course-specific
+  `fit_lab_09()` name. The old function remains as a soft-deprecated
+  wrapper.
+* **`load_report_workflow_cache()`** and **`fit_report_workflow()`**
+  replace the assessment-specific `load_option_a_cache()` and
+  `fit_option_a()` names. The old functions remain as soft-deprecated
+  wrappers.
+
 # causalworkshop 0.6.1
 
 ## Cache loader naming

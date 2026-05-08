@@ -1,6 +1,6 @@
-#' Load a PSYC 434 Option A validation cache
+#' Load a PSYC 434 report workflow cache
 #'
-#' Parameterised analogue of [load_policy_learning_cache()] for the Option A
+#' Parameterised analogue of [load_policy_learning_cache()] for the report
 #' assessment, where students choose one of two exposures
 #' (`"religious_service"` or `"volunteer_work"`). Each exposure has its
 #' own zip on Google Drive containing three parquet files written by
@@ -13,10 +13,10 @@
 #'   [tools::R_user_dir()].
 #' @param refresh If `TRUE`, re-download the selected cache.
 #' @param refit If `TRUE`, skip the Drive download and refit locally via
-#'   [fit_option_a()]. Use this when you would prefer not to deserialise
+#'   [fit_report_workflow()]. Use this when you would prefer not to deserialise
 #'   a third-party blob, or to test a change to the simulator. Default
 #'   settings take ~10-25 min on an M-series laptop.
-#' @param ... Forwarded to [fit_option_a()] when `refit = TRUE`.
+#' @param ... Forwarded to [fit_report_workflow()] when `refit = TRUE`.
 #'
 #' @return A named list with elements `models_binary`,
 #'   `policy_tree_stability`, `policy_workflow`, `cache_dir`, and
@@ -28,12 +28,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' cache_rel <- load_option_a_cache("religious_service")
-#' cache_vol <- load_option_a_cache("volunteer_work")
+#' cache_rel <- load_report_workflow_cache("religious_service")
+#' cache_vol <- load_report_workflow_cache("volunteer_work")
 #' }
 #'
 #' @export
-load_option_a_cache <- function(
+load_report_workflow_cache <- function(
   exposure = c("religious_service", "volunteer_work"),
   cache_root = tools::R_user_dir("psyc434", which = "cache"),
   refresh = FALSE,
@@ -42,7 +42,7 @@ load_option_a_cache <- function(
 ) {
   exposure <- match.arg(exposure)
   if (isTRUE(refit)) {
-    return(fit_option_a(exposure = exposure, ...))
+    return(fit_report_workflow(exposure = exposure, ...))
   }
   .ensure_arrow_stack()
 
@@ -81,7 +81,7 @@ load_option_a_cache <- function(
       stop(
         "no cache URL configured for ", exposure, ".\n",
         "set ", meta$env_var, " to a Google Drive share URL, or update ",
-        "the default in causalworkshop's R/load_option_a_cache.R."
+        "the default in causalworkshop's R/load_report_workflow_cache.R."
       )
     }
     file_id <- .gdrive_file_id(meta$url)
@@ -110,6 +110,23 @@ load_option_a_cache <- function(
     cache_dir = cache_dir,
     exposure = exposure
   )
+}
+
+#' Load a PSYC 434 Option A validation cache
+#'
+#' `load_option_a_cache()` is soft-deprecated. Use
+#' [load_report_workflow_cache()] instead.
+#'
+#' @inheritParams load_report_workflow_cache
+#' @inherit load_report_workflow_cache return
+#' @export
+load_option_a_cache <- function(...) {
+  warning(
+    "`load_option_a_cache()` is soft-deprecated; ",
+    "use `load_report_workflow_cache()` instead.",
+    call. = FALSE
+  )
+  load_report_workflow_cache(...)
 }
 
 # default share URLs per exposure. update after re-fitting and uploading
