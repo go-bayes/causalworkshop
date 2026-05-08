@@ -119,6 +119,7 @@ load_report_workflow_cache <- function(
 #'
 #' @inheritParams load_report_workflow_cache
 #' @inherit load_report_workflow_cache return
+#' @keywords internal
 #' @export
 load_option_a_cache <- function(...) {
   warning(

@@ -48,6 +48,7 @@ fit_report_workflow <- function(
 #'
 #' @inheritParams fit_report_workflow
 #' @inherit fit_report_workflow return
+#' @keywords internal
 #' @export
 fit_option_a <- function(...) {
   warning(

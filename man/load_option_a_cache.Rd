@@ -18,3 +18,4 @@ A named list with elements \code{models_binary},
 \code{load_option_a_cache()} is soft-deprecated. Use
 \code{\link[=load_report_workflow_cache]{load_report_workflow_cache()}} instead.
 }
+\keyword{internal}

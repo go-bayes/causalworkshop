@@ -14,3 +14,4 @@ A named list with \code{models_binary}, \code{policy_tree_stability},
 \code{fit_lab_09()} is soft-deprecated. Use
 \code{\link[=fit_policy_learning_workflow]{fit_policy_learning_workflow()}} instead.
 }
+\keyword{internal}

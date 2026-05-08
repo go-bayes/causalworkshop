@@ -2,3 +2,38 @@ url: https://go-bayes.github.io/causalworkshop/
 
 template:
   bootstrap: 5
+
+reference:
+  - title: "Policy and report workflows"
+    contents:
+      - load_policy_learning_cache
+      - fit_policy_learning_workflow
+      - load_report_workflow_cache
+      - fit_report_workflow
+
+  - title: "Workshop scripts"
+    contents:
+      - check_workshop_prerequisites
+      - get_workshop_scripts
+      - list_workshop_scripts
+      - run_workshop
+
+  - title: "Simulation functions"
+    contents:
+      - simulate_ate_data_with_weights
+      - simulate_measurement_items
+      - simulate_mediation_example
+      - simulate_nonlinear_data
+      - simulate_nzavs_data
+      - simulate_religious_data
+      - simulate_three_wave_panel
+
+  - title: "Teaching examples and plots"
+    contents:
+      - compare_ate_methods
+      - plot_heterogeneity_distribution
+      - plot_observed_confounding
+      - plot_rate_qini_curves
+      - plot_selection_bias
+      - workshop_baseline_adjustment
+      - workshop_causal_forest

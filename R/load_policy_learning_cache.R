@@ -119,6 +119,7 @@ load_policy_learning_cache <- function(
 #'
 #' @inheritParams load_policy_learning_cache
 #' @inherit load_policy_learning_cache return
+#' @keywords internal
 #' @export
 load_lab_09_cache <- function(...) {
   warning(

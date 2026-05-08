@@ -13,3 +13,4 @@ A named list with \code{models_binary}, \code{policy_tree_stability},
 \description{
 \code{fit_option_a()} is soft-deprecated. Use \code{\link[=fit_report_workflow]{fit_report_workflow()}} instead.
 }
+\keyword{internal}

@@ -57,6 +57,7 @@ fit_policy_learning_workflow <- function(
 #'
 #' @inheritParams fit_policy_learning_workflow
 #' @inherit fit_policy_learning_workflow return
+#' @keywords internal
 #' @export
 fit_lab_09 <- function(...) {
   warning(

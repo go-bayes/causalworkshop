@@ -17,3 +17,4 @@ A named list with elements \code{models_binary},
 \code{load_lab_09_cache()} is soft-deprecated. Use
 \code{\link[=load_policy_learning_cache]{load_policy_learning_cache()}} instead.
 }
+\keyword{internal}
