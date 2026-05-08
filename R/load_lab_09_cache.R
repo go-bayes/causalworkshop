@@ -1,8 +1,8 @@
-#' Load the PSYC 434 Lab 9 cache
+#' Load the PSYC 434 policy-learning cache
 #'
 #' Downloads (once) and reads the pre-fitted causal-forest artefacts that
-#' Lab 9 of PSYC 434 builds on. The cache lives as a public Google Drive
-#' zip and contains three parquet files written by
+#' the PSYC 434 policy-learning materials build on. The cache lives as a
+#' public Google Drive zip and contains three parquet files written by
 #' [margot::here_save_arrow()]: `models_binary.parquet`,
 #' `policy_tree_stability.parquet`, `policy_workflow.parquet`. On first
 #' call the zip is fetched into a per-user cache directory, unpacked,
@@ -11,7 +11,7 @@
 #'
 #' @param url Google Drive share URL of `lab-09-cache.zip`. Defaults to
 #'   the package's canonical URL; can be overridden via the
-#'   `PSYC434_LAB09_CACHE_URL` environment variable.
+#'   `PSYC434_POLICY_LEARNING_CACHE_URL` environment variable.
 #' @param cache_dir Directory where the cache is stored on disk.
 #'   Defaults to a per-user location returned by [tools::R_user_dir()].
 #' @param refresh If `TRUE`, re-download the cache even if it is already
@@ -25,20 +25,20 @@
 #' @return A named list with elements `models_binary`,
 #'   `policy_tree_stability`, `policy_workflow`, and `cache_dir`.
 #'
-#' @details The instructor shortcut: set `PSYC434_LAB09_CACHE` in your
+#' @details The instructor shortcut: set `PSYC434_POLICY_LEARNING_CACHE` in your
 #'   `~/.Renviron` to a local Drive directory holding the three parquet
 #'   files, and the function will read them directly without touching
 #'   the network.
 #'
 #' @examples
 #' \dontrun{
-#' cache <- load_lab_09_cache()
+#' cache <- load_policy_learning_cache()
 #' cache$models_binary
 #' }
 #'
 #' @export
-load_lab_09_cache <- function(
-  url = .lab_09_cache_url(),
+load_policy_learning_cache <- function(
+  url = .policy_learning_cache_url(),
   cache_dir = tools::R_user_dir("psyc434", which = "cache"),
   refresh = FALSE,
   refit = FALSE,
@@ -57,7 +57,10 @@ load_lab_09_cache <- function(
 
   # author shortcut: read from a local Drive mirror if the env var
   # points at a directory holding all three parquet files.
-  local_drive <- Sys.getenv("PSYC434_LAB09_CACHE", "")
+  local_drive <- Sys.getenv("PSYC434_POLICY_LEARNING_CACHE", "")
+  if (!nzchar(local_drive)) {
+    local_drive <- Sys.getenv("PSYC434_LAB09_CACHE", "")
+  }
   if (nzchar(local_drive) &&
     all(file.exists(file.path(local_drive, expected_files)))) {
     return(list(
@@ -77,8 +80,8 @@ load_lab_09_cache <- function(
   if (needs_download) {
     if (identical(url, "<paste-share-url-here>") || nchar(url) == 0) {
       stop(
-        "no cache URL configured. set PSYC434_LAB09_CACHE_URL to a ",
-        "Google Drive share URL of lab-09-cache.zip, or update the ",
+        "no cache URL configured. set PSYC434_POLICY_LEARNING_CACHE_URL ",
+        "to a Google Drive share URL of lab-09-cache.zip, or update the ",
         "default in causalworkshop's R/load_lab_09_cache.R."
       )
     }
@@ -109,11 +112,30 @@ load_lab_09_cache <- function(
   )
 }
 
-# default share URL for the Lab 9 cache. update after re-fitting and
-# uploading the parquet-based zip.
+#' Load the PSYC 434 Lab 9 cache
+#'
+#' `load_lab_09_cache()` is soft-deprecated. Use
+#' [load_policy_learning_cache()] instead.
+#'
+#' @inheritParams load_policy_learning_cache
+#' @inherit load_policy_learning_cache return
+#' @export
+load_lab_09_cache <- function(...) {
+  warning(
+    "`load_lab_09_cache()` is soft-deprecated; ",
+    "use `load_policy_learning_cache()` instead.",
+    call. = FALSE
+  )
+  load_policy_learning_cache(...)
+}
+
+# default share URL for the policy-learning cache. update after re-fitting
+# and uploading the parquet-based zip.
 .LAB_09_CACHE_URL_DEFAULT <- "https://drive.google.com/file/d/1IvlurjbqcHSdSQ7KLcb0mAeXa1X4M26H/view?usp=sharing"
 
-.lab_09_cache_url <- function() {
+.policy_learning_cache_url <- function() {
+  user_url <- Sys.getenv("PSYC434_POLICY_LEARNING_CACHE_URL", "")
+  if (nzchar(user_url)) return(user_url)
   user_url <- Sys.getenv("PSYC434_LAB09_CACHE_URL", "")
   if (nzchar(user_url)) return(user_url)
   .LAB_09_CACHE_URL_DEFAULT

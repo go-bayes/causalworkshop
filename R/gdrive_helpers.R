@@ -1,4 +1,4 @@
-# private helpers shared by load_lab_09_cache() and load_option_a_cache().
+# private helpers shared by load_policy_learning_cache() and load_option_a_cache().
 # extract a Google Drive file ID from a share URL and download a public
 # file via googledrive's authenticated-but-deauthed flow, which handles
 # the virus-scan confirmation page that trips simple curl downloads on

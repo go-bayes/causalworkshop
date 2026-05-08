@@ -1,6 +1,6 @@
 #' Load a PSYC 434 Option A validation cache
 #'
-#' Parameterised analogue of [load_lab_09_cache()] for the Option A
+#' Parameterised analogue of [load_policy_learning_cache()] for the Option A
 #' assessment, where students choose one of two exposures
 #' (`"religious_service"` or `"volunteer_work"`). Each exposure has its
 #' own zip on Google Drive containing three parquet files written by

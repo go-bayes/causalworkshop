@@ -1,8 +1,8 @@
 # private helper shared by fit_lab_09() and fit_option_a(). fits the
 # multi-outcome causal-forest batch, the policy-tree stability check,
 # and the policy workflow on a freshly simulated NZAVS-style panel.
-# returns the same three-artefact list shape as load_lab_09_cache() and
-# load_option_a_cache(). expensive: ~10-25 minutes on an M-series
+# returns the same three-artefact list shape as load_policy_learning_cache()
+# and load_option_a_cache(). expensive: ~10-25 minutes on an M-series
 # laptop at default settings.
 
 .fit_psyc434 <- function(

@@ -1,3 +1,12 @@
+# causalworkshop 0.6.1
+
+## Cache loader naming
+
+* **`load_policy_learning_cache()`** is the preferred name for the
+  pre-fitted policy-learning artefact loader. **`load_lab_09_cache()`**
+  remains available as a soft-deprecated wrapper for older course
+  materials.
+
 # causalworkshop 0.6.0
 
 ## Cache loaders for PSYC 434

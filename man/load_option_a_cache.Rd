@@ -17,7 +17,7 @@ load_option_a_cache(
 
 \item{cache_root}{Root directory where per-exposure caches are stored
 on disk. Defaults to a per-user location under
-\code{\link[tools:userdir]{tools::R_user_dir()}}.}
+\code{\link[tools:R_user_dir]{tools::R_user_dir()}}.}
 
 \item{refresh}{If \code{TRUE}, re-download the selected cache.}
 
@@ -34,7 +34,7 @@ A named list with elements \code{models_binary},
 \code{exposure}.
 }
 \description{
-Parameterised analogue of \code{\link[=load_lab_09_cache]{load_lab_09_cache()}} for the Option A
+Parameterised analogue of \code{\link[=load_policy_learning_cache]{load_policy_learning_cache()}} for the Option A
 assessment, where students choose one of two exposures
 (\code{"religious_service"} or \code{"volunteer_work"}). Each exposure has its
 own zip on Google Drive containing three parquet files written by

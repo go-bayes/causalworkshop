@@ -34,7 +34,7 @@ A named list with \code{models_binary}, \code{policy_tree_stability},
 \description{
 Refits the Lab 9 multi-outcome causal forest, policy-tree stability
 check, and policy workflow on the caller's machine, returning the
-same list shape as \code{\link[=load_lab_09_cache]{load_lab_09_cache()}}. Use this when you would
+same list shape as \code{\link[=load_policy_learning_cache]{load_policy_learning_cache()}}. Use this when you would
 rather not deserialise the author's pre-fitted artefacts from Google
 Drive — for example, if you would prefer not to run
 \code{\link[qs2:qs_deserialize]{qs2::qs_deserialize()}} on a third-party blob, or you want to test a
@@ -46,10 +46,10 @@ Expect ~10-25 min on an M-series laptop at defaults.
 \examples{
 \dontrun{
 cache <- fit_lab_09()
-# equivalent to causalworkshop::load_lab_09_cache(refit = TRUE)
+# equivalent to causalworkshop::load_policy_learning_cache(refit = TRUE)
 }
 
 }
 \seealso{
-\code{\link[=load_lab_09_cache]{load_lab_09_cache()}} for the Drive-hosted alternative.
+\code{\link[=load_policy_learning_cache]{load_policy_learning_cache()}} for the Drive-hosted alternative.
 }
