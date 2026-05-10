@@ -1,0 +1,15 @@
+utils::globalVariables(c(
+  ".data",
+  "adjusted_estimate",
+  "cumulative_gain",
+  "efficiency_gain",
+  "estimate",
+  "gain_over_random",
+  "importance",
+  "lift_vs_random",
+  "method",
+  "naive_estimate",
+  "percentile",
+  "rate",
+  "true_effect"
+))

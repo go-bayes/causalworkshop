@@ -24,7 +24,7 @@
 #' @details
 #' This function demonstrates the core workflow for causal forest analysis:
 #' 1. Fits a causal forest using honest sample splitting
-#' 2. Predicts individual treatment effects τ(x)
+#' 2. Predicts individual treatment effects tau(x)
 #' 3. Tests for significant treatment effect heterogeneity
 #' 4. Calculates variable importance for effect modification
 #' 5. Provides interpretation of results
@@ -43,12 +43,14 @@
 #' # View variable importance
 #' results$variable_importance
 #'
-#' # Use custom parameters
+#' \dontrun{
+#' # Use custom parameters with your own data
 #' results <- workshop_causal_forest(
 #'   data = my_data,
 #'   num_trees = 2000,
 #'   outcome_var = "volunteer_outcome"
 #' )
+#' }
 #'
 #' @export
 workshop_causal_forest <- function(data = NULL,
@@ -123,8 +125,8 @@ workshop_causal_forest <- function(data = NULL,
   if (verbose) {
     cli::cli_rule("Heterogeneity Analysis")
     cli::cli_alert_info("Treatment effect variation:")
-    cli::cli_alert_info("  Mean τ(x): {round(heterogeneity_stats$mean_tau, 3)}")
-    cli::cli_alert_info("  SD τ(x): {round(heterogeneity_stats$sd_tau, 3)}")
+    cli::cli_alert_info("  Mean tau(x): {round(heterogeneity_stats$mean_tau, 3)}")
+    cli::cli_alert_info("  SD tau(x): {round(heterogeneity_stats$sd_tau, 3)}")
     cli::cli_alert_info("  Range: [{round(heterogeneity_stats$min_tau, 3)}, {round(heterogeneity_stats$max_tau, 3)}]")
   }
 

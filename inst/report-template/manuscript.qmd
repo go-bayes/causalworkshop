@@ -1,0 +1,549 @@
+---
+title: "Outcome-Wide Effects of an Exposure on Wellbeing"
+subtitle: "PSYC 434: Option A research report"
+author: "Your name"
+date: today
+abstract: |
+  Replace this abstract after adapting the template. This report estimates
+  the average treatment effect of one exposure on four wellbeing outcomes
+  in a synthetic three-wave panel produced by the course simulator.
+  Method, results, and ethical considerations follow the Option A
+  criteria and the workflow practised in Labs 8-10.
+format:
+  pdf:
+    pdf-engine: lualatex
+    documentclass: article
+    geometry:
+      - margin=1in
+    fontsize: 11pt
+    toc: true
+    number-sections: false
+    fig-pos: H
+  html:
+    toc: true
+    number-sections: false
+bibliography: references.bib
+csl: apa.csl
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: load-and-fit
+#| include: false
+source("setup.R")
+panel <- simulate_panel()
+fit <- run_fit_pipeline(panel)
+ate <- ate_plot_objects(fit$models_binary)
+```
+
+> **How to read this template.** Every section below has two parts. **Instructional callouts** (block-quoted, like this one) tell you *what to write* and stay in the file as a checklist. **Italicised placeholder prose** is what you delete and replace with your own writing. The headings, code chunks, tables, and figures stay as they are.
+
+> **Before you submit.** Run through this list:
+>
+> 1. `name_exposure` in `setup.R` is `"religious_service"` or `"volunteer_work"`, not `"community_group"`.
+> 2. You have replaced every italicised placeholder paragraph.
+> 3. You have rewritten the auto-drafted policy-tree narrative in your own words.
+> 4. The PDF builds without warnings.
+> 5. References use American Psychological Association (APA) 7 style (the template's default).
+> 6. You have completed the Contributor Roles Taxonomy (CRediT) and artificial-intelligence (AI) disclosure statements.
+
+> **Where to look for help.** The [ten-step causal workflow](https://go-bayes.github.io/epic-presentations/2026/psyc-434/causal-workflow.html) anchors the section ordering below. The [reporting guide](https://go-bayes.github.io/epic-presentations/2026/psyc-434/reporting-guide.html) covers what to report. A [historical example PDF](https://go-bayes.github.io/epic-presentations/2026/psyc-434-assets/example-psyc434-report.pdf) shows tone and structure (the topic and design are different — use it for shape, not content).
+
+# Introduction
+
+> **Write here.** A short motivation: why this question matters, what is already known, and why a causal answer (rather than a descriptive one) is worth the effort. About 600–800 words. Use the existing literature on the four wellbeing outcomes; the [BibTeX guide](README.md#adding-citations-with-bibtex) walks through adding references.
+
+*Replace this paragraph with your own framing. State the causal question, name the target population, and explain why the question matters. The report is outcome-wide: it asks how `r exposure_label` affects four wellbeing outcomes together, rather than selecting one outcome after looking at the results.*
+
+# State the problem
+
+> **Write here.** A *technical* restatement of the question in causal-inference language. Where the Introduction motivates and contextualises, this section names the contrast precisely, the target population precisely, and the four outcomes precisely. Two or three short paragraphs.
+
+*The exposure is `r name_exposure`, recorded at wave 1; the outcomes are sense of purpose, belonging, self-esteem, and life satisfaction at wave 2. The data are simulated by `causalworkshop::simulate_nzavs_data()`, so the numerical results do not generalise to any real population.*
+
+*State the problem as a causal question: among the target population, what would happen to later wellbeing if everyone received the exposure compared with if no one received it? The remainder of this report follows the ten-step workflow at <https://go-bayes.github.io/epic-presentations/2026/psyc-434/causal-workflow.html>.*
+
+# Determine the exposure
+
+> **Write here.** Define the exposure precisely. Discuss whether the **consistency assumption** holds (do two participants reporting the same value share the same potential outcomes, or are there hidden versions of the treatment?). State the time-zero convention. Be specific about what would make the exposure label too vague.
+
+*This guide demonstrates the workflow with **community-group participation at wave 1** as the exposure (`name_exposure <- "community_group"` in `setup.R`). For your own assessment, change `name_exposure` to either `"religious_service"` or `"volunteer_work"` before rendering the final report; `community_group` is the Lab 9 worked-example exposure and is not a valid choice for submission.*
+
+*The chosen exposure is recorded at wave 1. The comparison is exposed versus unexposed; this binary contrast is the **causal contrast** of interest. Covariates are measured at wave 0, the exposure begins at wave 1, and outcomes are observed at wave 2.*
+
+```{r}
+#| label: fig-exposure-distribution
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: !expr sprintf("Distribution of %s at wave 1. Vertical line marks the cut-point used to define the binary contrast.", exposure_label)
+margot::margot_plot_categorical(
+  panel,
+  col_name = "exposure_t1",
+  custom_breaks = 0.5,
+  cutpoint_inclusive = "lower",
+  binwidth = 0.5,
+  show_mean = FALSE,
+  show_median = FALSE,
+  show_sd = FALSE,
+  title = sprintf("%s at wave 1", tools::toTitleCase(exposure_label)),
+  subtitle = "Cut-point at 0.5: unexposed (0) vs exposed (1)",
+  x_lab = exposure_label
+)
+```
+
+The simulator returns the exposure already binarised at "any reported attendance vs none". For continuous exposures in your own work (for example, an hours-per-week measure), `margot::margot_plot_categorical()` accepts a `custom_breaks` vector (or `sd_multipliers` such as `c(-1, 1)`) so the histogram visualises where the cut-points fall before the binary contrast is constructed.
+
+# Determine the outcomes
+
+> **Write here.** Define each outcome ($Y_1, \dots, Y_4$). Explain how each one relates to the scientific question. State the case for VanderWeele's outcome-wide approach [@vanderweele2020]: the four outcomes together index *wellbeing as a composite construct* rather than four independent endpoints, and reporting all of them guards against *selective reporting* (presenting only the outcome that gave the strongest result after looking at the data).
+
+*The four outcomes are measured at wave 2, after the wave-1 exposure. They are continuous and z-scored (mean zero, standard deviation one) by the simulator, so all effects are reported in standard-deviation units.*
+
+```{r}
+#| label: tbl-outcomes
+#| tbl-cap: "Wave-2 outcome means and standard deviations."
+tibble(
+  outcome = c("Sense of purpose", "Belonging", "Self-esteem", "Life satisfaction"),
+  mean = c(mean(panel$t2_purpose), mean(panel$t2_belonging),
+           mean(panel$t2_self_esteem), mean(panel$t2_life_satisfaction)),
+  sd = c(sd(panel$t2_purpose), sd(panel$t2_belonging),
+         sd(panel$t2_self_esteem), sd(panel$t2_life_satisfaction))
+) |>
+  mutate(across(where(is.numeric), \(x) round(x, 2))) |>
+  kable()
+```
+
+# Source and target populations
+
+> **Write here, in two short paragraphs.**
+>
+> 1. *Target population.* Who would the answer apply to if the assumptions held? Would `r exposure_label` apply to *all* New Zealanders, or only to a subset (those with non-zero baseline exposure, a particular age range, or others for whom the contrast is conceivable)? Identify any subpopulation for whom the contrast is ill-defined or for whom **positivity** (every covariate profile contains both exposed and unexposed individuals) is unlikely to hold.
+> 2. *Transportability.* If you intend to generalise beyond the simulated source population, what extra assumptions would you need?
+
+*The safest framing is that the simulator supports learning the workflow; it is not evidence about real New Zealanders. Replace this paragraph with your own framing of the target population and transportability.*
+
+# Eligibility criteria
+
+> **Write here.** Two short paragraphs.
+>
+> 1. *Who is the result for?* Name the people the answer would apply to if the assumptions held. Be concrete: think about a Kiwi reading the result and asking "does this apply to me?"
+> 2. *Who would the intervention be absurd for?* List the people for whom the contrast does not make sense. For example, "increase religious-service attendance" is not a coherent intervention for a self-described atheist who has no intention of attending; the counterfactual is undefined for them. Excluding such people up front protects positivity (no covariate profile that contains *only* one exposure level) and clarifies what your estimate is about.
+
+*The simulator returns complete cases, so there are no missing-data exclusions to apply. State the substantive eligibility criteria you would impose if this were a real cohort: who is in scope, and who you would exclude because the intervention itself does not make sense for them.*
+
+# Sample characteristics
+
+> **Write here.** A short paragraph naming the sample size, exposure prevalence, and one or two notable features of the descriptives table (Appendix S1). Keep this short; the full table lives in the appendix.
+
+*The sample contains $n = `r nrow(panel)`$ simulated units. The wave-1 exposure prevalence is `r round(mean(panel$exposure_t1), 2)`. Full descriptive statistics for baseline and outcome variables appear in [Appendix S1](#appendix-sample); item-level measure descriptions appear in [Appendix S2](#appendix-measures).*
+
+# Account for confounders
+
+> **Write here.** Justify each group of covariates as a plausible cause of both the exposure and later wellbeing. Confirm every covariate precedes the exposure in time. Describe how the adjustment set supports **conditional exchangeability**: that for two people who match on $L$, exposure status is, on average, as good as random with respect to the potential outcomes.
+
+*The adjustment set $L$ contains baseline demographics, socioeconomic variables, the Big-Five personality variables, the wave-0 value of the exposure, and the wave-0 value of every outcome. Including the wave-0 value of the exposure and outcomes is **lagged-self adjustment** (each variable's own past value is treated as a covariate, so the wave-1 exposure can be compared between people who started at the same baseline).*
+
+```{r}
+#| label: tbl-adjustment
+#| tbl-cap: "Adjustment set, grouped by role."
+adjustment_groups <- list(
+  "Baseline demographics and socioeconomic" = c(
+    "age", "male", "nz_european", "education", "partner",
+    "employed", "log_income", "nz_dep"
+  ),
+  "Personality (Big Five)" = c(
+    "agreeableness", "conscientiousness", "extraversion",
+    "neuroticism", "openness"
+  ),
+  "Baseline exposure (lagged-self)" = name_exposure,
+  "Baseline outcomes (lagged-self)" = outcome_short_names
+)
+
+variable_labels <- c(
+  age = "Age (years)",
+  male = "Male (0/1)",
+  nz_european = "NZ European (0/1)",
+  education = "Education (years)",
+  partner = "Partnered (0/1)",
+  employed = "Employed (0/1)",
+  log_income = "Log household income",
+  nz_dep = "NZDep (deprivation)",
+  agreeableness = "Agreeableness",
+  conscientiousness = "Conscientiousness",
+  extraversion = "Extraversion",
+  neuroticism = "Neuroticism",
+  openness = "Openness",
+  religious_service = "Religious-service attendance (wave 0)",
+  volunteer_work = "Volunteer work (wave 0)",
+  purpose = "Sense of purpose (wave 0)",
+  belonging = "Belonging (wave 0)",
+  self_esteem = "Self-esteem (wave 0)",
+  life_satisfaction = "Life satisfaction (wave 0)"
+)
+
+adj_tbl <- tibble(
+  variable = unlist(adjustment_groups, use.names = FALSE),
+  label = unname(variable_labels[unlist(adjustment_groups, use.names = FALSE)])
+)
+
+knitr::kable(
+  adj_tbl,
+  col.names = c("Variable", "Label"),
+  align = "ll"
+) |>
+  kableExtra::kable_styling(latex_options = c("hold_position")) |>
+  kableExtra::pack_rows(index = sapply(adjustment_groups, length))
+```
+
+# Draw a causal diagram
+
+> **Write here.** Replace the minimal directed acyclic graph (DAG) below with one that names the unmeasured confounders and selection processes you take seriously. Verify d-separation by hand or with `dagitty::adjustmentSets()`. For a causal-diagram-and-confounding tutorial pitched at this course's level, see @bulbulia2024causaldiagrams.
+>
+> *Switching to TikZ:* open `manuscript.qmd`, find the chunk that begins ```` ```{r} ```` with `label: fig-dag-ggdag`, and change `#| eval: true` to `#| eval: false`. Then find the chunk that begins ```` ```{tikz} ```` with `label: fig-dag-tikz` (a few lines below) and change its `%| eval: false` to `%| eval: true`. Re-render. The TikZ chunk uses `%|` (LaTeX comment style) instead of `#|` for its options.
+
+```{r}
+#| label: fig-dag-ggdag
+#| eval: true
+#| fig-width: 8
+#| fig-height: 5
+#| fig-cap: "Minimal causal directed acyclic graph (DAG). Baseline covariates L are common causes of the wave-1 exposure A and the wave-2 outcome Y. The same structure applies to all four wellbeing outcomes; one Y is shown to declutter the diagram."
+dag <- dagify(
+  Y ~ A + L,
+  A ~ L,
+  exposure = "A",
+  outcome  = "Y"
+) |>
+  tidy_dagitty(layout = "tree")
+
+ggdag(dag, text = TRUE, node_size = 20) +
+  theme_dag_blank()
+```
+
+```{tikz}
+%| label: fig-dag-tikz
+%| eval: false
+%| fig-width: 5
+%| fig-height: 3
+%| fig-ext: pdf
+%| fig-cap: "Minimal causal DAG rendered with TikZ. Baseline covariates L are common causes of the wave-1 exposure A and the wave-2 outcome Y."
+\usetikzlibrary{positioning,arrows.meta}
+\begin{tikzpicture}[
+    ->, >={Stealth[length=2.5mm]}, thick,
+    every node/.style={circle, draw, minimum size=0.9cm, inner sep=2pt, font=\small}
+  ]
+  \node (L) {$L$};
+  \node (A) [below right=1.2cm and 1.6cm of L] {$A$};
+  \node (Y) [right=3.6cm of A] {$Y$};
+
+  \draw (L) -- (A);
+  \draw (L) to[out=-30, in=120] (Y);
+  \draw (A) -- (Y);
+\end{tikzpicture}
+```
+
+A note on the rendering: both versions draw arrows from $L$ to $A$, $L$ to $Y$, and $A$ to $Y$. The arrow $A \to Y$ is *not* a commitment to a specific causal mechanism. DAG arrows are qualitative claims about which variables can affect which others. We use the DAG to check **d-separation** (a graphical rule for reading off whether two variables are conditionally independent given a set of others): conditioning on $L$ should block every backdoor path between $A$ and $Y$. Replace this minimal diagram with a richer one that names the unmeasured confounders and selection processes you take seriously, and verify d-separation by hand or with `dagitty::adjustmentSets()`.
+
+The TikZ version is more work to lay out, but it renders crisply at any zoom and gives full control over node placement, edge curvature, and labelling. That control matters if a reviewer asks for a publication-quality figure. Edit node positions, add unmeasured-confounder bubbles, or extend to multiple outcomes by copying the structure of the `\node` and `\draw` lines.
+
+# Identify the estimand
+
+> **Write here.** State the case for each of the three identification assumptions (consistency, conditional exchangeability given $L$, positivity) in your own words. The mathematical statement of the causal estimand stays as written below.
+
+For each outcome $Y_k$, the causal estimand is
+
+$$
+\mathrm{ATE}_k = \mathbb{E}[Y_k(1) - Y_k(0)], \quad k = 1, \dots, 4.
+$$
+
+The joint causal estimand is the vector of four average treatment effects:
+
+$$
+\big(\mathrm{ATE}_{\mathrm{purpose}}, \mathrm{ATE}_{\mathrm{belonging}}, \mathrm{ATE}_{\mathrm{self\text{-}esteem}}, \mathrm{ATE}_{\mathrm{life\text{-}satisfaction}}\big).
+$$
+
+*Identification of each $\mathrm{ATE}_k$ requires three assumptions: **consistency** (the recorded exposure value is the same intervention for everyone with that value), **conditional exchangeability given $L$** (after adjusting for the covariates above, exposure assignment is as good as random with respect to the potential outcomes), and **positivity** (both exposure levels are observed in every covariate profile that matters).*
+
+# Missing data
+
+> **Write here.** State your missing-data strategy and the assumption it requires. The simulator we use here is complete-case, so for this report you can keep the example statement below as your starting point and adjust the numbers; in a real panel-data study you would describe the actual missingness pattern.
+
+*The simulator returns complete cases. In real panel data, document missingness by variable and use **inverse-probability-of-censoring weights (IPCW)**, a method that reweights observed cases to stand in for those who dropped out, or another defended missing-data strategy. The IPCW assumption is that missingness is unrelated to the unobserved outcome, conditional on the covariates.*
+
+> **Example statement (adapt the numbers and the framing for your own write-up).**
+>
+> *Of the `r nrow(panel)` simulated wave-0 records used here, all had observed wave-1 exposure and all four wave-2 outcomes by construction; no missing-data correction was needed for this report. In a real-data version of this study, we would fit IPCW weights by regressing the wave-2 censoring indicator on the wave-0 covariates listed above, and apply the resulting weights to each causal forest. The IPCW assumption is that participants who drop out are exchangeable, conditional on the observed covariates, with those who stay. That assumption is most plausible when post-exposure circumstances do not drive attrition; sensitivity analyses (for example, varying the propensity model) are reported in the Discussion.*
+
+# Methods
+
+> **Write here.** Briefly explain how machine learning is used and what "doubly robust" means. State your tuning choices (number of trees, honesty, seed). The values appear in `setup.R`; the complete script is reproduced in [Appendix S3](#appendix-r-code).
+
+*Each outcome is fit with a separate **honest causal forest** [@athey2019grf; @wager2018], a tree-ensemble that splits the sample so the same observations are not used to choose splits and to estimate effects. We use `margot::margot_causal_forest()`, which wraps `grf::causal_forest()` and estimates the ATE with a **doubly-robust estimator**: it combines a model for the outcome and a model for the propensity score, so the estimate is consistent if either of the two models is well specified.*
+
+*`margot::margot_plot()` then takes the four-outcome combined table, applies the Bonferroni correction across the family of outcomes [@vanderweele2020], and returns three things: a forest plot, a table with the multiplicity-adjusted confidence intervals and recomputed E-values, and a short prose interpretation. The `_cache/` directory holds the saved fit; subsequent renders reuse it instead of refitting (set `invalidate_fit_cache <- TRUE` in `setup.R` to force a refit).*
+
+The Bonferroni correction controls the **family-wise error rate** (the probability of at least one false positive among the four reported outcomes) at $\alpha_{FW} = `r alpha_family_wise`$ across four outcomes [@vanderweele2020]. The point and bound E-values follow @ding2016 and @vanderweele2017.
+
+# Results
+
+> **Write here.** Describe the pattern across the four outcomes (direction, rough magnitude, multiplicity-adjusted uncertainty), referring to the table and figure below. Interpret the pattern *as a whole*, not outcome by outcome. Use the auto-drafted interpretation as a fact-check, not as final prose.
+
+```{r}
+#| label: tbl-results
+#| tbl-cap: "Outcome-wide average treatment effects with Bonferroni-adjusted 95% confidence intervals and E-values. The bound E-value is computed at the multiplicity-adjusted lower confidence limit."
+ate$transformed_table |>
+  mutate(across(where(is.numeric), \(x) round(x, 3))) |>
+  kable()
+```
+
+The bound E-value is the strength of an unmeasured confounder, on the risk-ratio scale, that would be needed to push the multiplicity-adjusted lower bound to the null. A bound E-value of 1 means the multiplicity-adjusted CI already crosses zero, so no confounding strength is needed.
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-forest
+#| fig-width: 10
+#| fig-height: 7
+#| fig-cap: "Outcome-wide ATEs with Bonferroni-adjusted 95% CIs (margot::margot_plot, adjust = \"bonferroni\")."
+ate$plot
+```
+
+{{< pagebreak >}}
+
+> **Auto-drafted interpretation. Use as a fact-check; rewrite in your own words for the final report.**
+
+```{r}
+#| label: ate-interpretation
+#| results: asis
+cat(ate$interpretation)
+```
+
+> **Optional self-check (not required).** The simulator stores the *true* individual treatment effects in `tau_*` columns, so you can compare each estimated ATE with the population-mean tau. `setup.R` exposes `ground_truth_audit()` for exactly this purpose; running `ground_truth_audit()` and joining it to your `ate$transformed_table` lets you check, for your own interest, how close the estimates land to the truth in this synthetic panel. **Do not include the audit in your submitted report** — a real-data study would not have a `tau_*` column.
+
+# Identify optimal policy trees
+
+A **policy tree** is a decision-tree allocation rule that searches for the *partition of the population* that maximises a utility function. Here, the utility is the average benefit of treating people the rule recommends to treat, relative to leaving everyone untreated. The tree therefore identifies an *optimal targeting rule*, not a set of subgroup contrasts: each leaf is a partition, not a comparison group with its own causal effect estimate. Read the splits as descriptors of where the utility-maximising rule sends people, not as causes of differential response.
+
+Following Lab 9, depth-1 and depth-2 policy trees are fit per outcome through `margot::margot_policy_tree_stability()` and `margot::margot_policy_workflow()`. The workflow chooses between depth-1 and depth-2 with a parsimony threshold of `r min_gain_for_depth_switch` outcome units (it prefers the simpler depth-1 rule unless depth-2 improves policy value by more than this threshold).
+
+```{r}
+#| label: tbl-policy-brief
+#| tbl-cap: "Policy-tree brief: selected depth, policy value (with 95% CI), treated uplift, and coverage."
+fit$wf$policy_brief_df |> kable()
+```
+
+A graphing rule keeps a policy tree only when both the policy-value and the treated-uplift lower confidence limits exceed zero (`margot::margot_select_grf_policy_trees()`). Outcomes that fail the rule remain in the report; their trees do not.
+
+```{r}
+#| label: tbl-selection
+#| tbl-cap: "Graphing-rule selection: graph_policy_tree is TRUE when both lower CIs exceed zero."
+fit$selection |>
+  transmute(
+    outcome = Outcome,
+    depth = Depth,
+    policy_value = round(policy_value, 3),
+    pv_lower = round(policy_value_lower, 3),
+    treated_uplift = round(treated_uplift, 3),
+    uplift_lower = round(treated_uplift_lower, 3),
+    graph = graph_policy_tree
+  ) |>
+  kable()
+```
+
+```{r}
+#| label: tbl-depth
+#| tbl-cap: "Depth-1 vs depth-2 comparison and the parsimony decision."
+fit$wf$best$depth_summary_df |>
+  select(outcome_label, depth_selected, pv_depth1, pv_depth2, pv_gain, decision) |>
+  mutate(across(c(pv_depth1, pv_depth2, pv_gain), \(x) round(x, 3))) |>
+  kable()
+```
+
+```{r}
+#| label: prep-policy-plots
+#| include: false
+label_to_model <- setNames(
+  fit$wf$best$depth_summary_df$model,
+  fit$wf$best$depth_summary_df$outcome_label
+)
+graphed_labels <- fit$selection$Outcome[fit$selection$graph_policy_tree]
+graphed <- unname(label_to_model[graphed_labels])
+graphed <- intersect(graphed, names(fit$wf$plots))
+graphed_pretty <- vapply(graphed, function(mn) {
+  v <- label_mapping[[mn]]
+  if (is.null(v)) mn else v
+}, character(1))
+```
+
+```{r}
+#| results: asis
+if (length(graphed) == 0) {
+  cat("No outcome passed the graphing rule. Report the rationale and discuss what an unidentified targeting story implies.\n")
+}
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-policy-tree-1
+#| fig-cap: "Policy tree, first selected outcome."
+#| fig-width: 10
+#| fig-height: 14
+if (length(graphed) >= 1) {
+  fit$wf$plots[[graphed[1]]]$combined_plot
+}
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-policy-tree-2
+#| fig-cap: "Policy tree, second selected outcome."
+#| fig-width: 10
+#| fig-height: 14
+if (length(graphed) >= 2) {
+  fit$wf$plots[[graphed[2]]]$combined_plot
+}
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-policy-tree-3
+#| fig-cap: "Policy tree, third selected outcome."
+#| fig-width: 10
+#| fig-height: 14
+if (length(graphed) >= 3) {
+  fit$wf$plots[[graphed[3]]]$combined_plot
+}
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| label: fig-policy-tree-4
+#| fig-cap: "Policy tree, fourth selected outcome."
+#| fig-width: 10
+#| fig-height: 14
+if (length(graphed) >= 4) {
+  fit$wf$plots[[graphed[4]]]$combined_plot
+}
+```
+
+{{< pagebreak >}}
+
+For each graphed tree, name the splitter variables, translate the *treat* leaves into plain language, report the held-out policy value with its 95% confidence interval, and note whether the depth-2 rule meaningfully improves on depth-1 under the parsimony rule. A splitter is not a cause: it is a variable that helps allocate treatment under the fitted objective.
+
+> **Auto-drafted policy-tree narrative. Use as a fact-check; rewrite in your own words for the final report. Do not paste the auto-draft into your submission verbatim.** The two blocks below come from `margot_policy_workflow()`. They are verbose and template-y. Read them against the tables and figures above; then write a tighter paragraph that names the splitter variables, translates each *treat* leaf into plain language, and acknowledges that the partition is a targeting rule, not a subgroup contrast.
+
+```{r}
+#| label: report-prose
+#| results: asis
+cat(fit$wf$report_prose)
+```
+
+```{r}
+#| label: report-detail
+#| results: asis
+if (!is.null(fit$wf$report_detail)) {
+  cat("\n\n### Detailed auto-draft (rewrite in your own words)\n\n")
+  cat(fit$wf$report_detail)
+}
+```
+
+# Discussion
+
+> **Write here.** Five short subsections, capped at 1,000 words total. The suggested word counts below add up to ~1,000; treat them as a guide, not a hard rule.
+
+## Summary of results (~250 words)
+
+> **Write here.** Restate the causal question. Summarise the pattern across all four outcomes (direction, rough magnitude, multiplicity-adjusted uncertainty, and the targeting story — whether any of the four policy trees passed the graphing rule). Describe the pattern, not each outcome in turn.
+
+## Limitations (~200 words)
+
+> **Write here.** Acknowledge the three identification assumptions (consistency, conditional exchangeability, positivity). Name the one most probable to fail in a real-data study. Note that the data are simulated, and explain what that implies for external validity. Flag at least one design choice you would revise for a real-data version.
+
+## Importance of methods (~100 words)
+
+> **Write here.** Briefly motivate why an outcome-wide design with Bonferroni-adjusted confidence intervals and policy-tree targeting is the right approach for this question. Contrast with simpler alternatives such as a single-outcome regression. Two or three sentences is enough.
+
+## Importance of findings, theory and policy (~250 words)
+
+> **Write here.** State what the result would mean for theory if it held in real data. State what it would mean for policy or practice. Be concrete and brief: name a decision-maker who would care, and the smallest change to their practice the evidence could support.
+
+## Ethics (~200 words)
+
+> **Write here.** Three to five sentences. Name the equity, proxy-variable, and oversight considerations that a decision-maker would need to address before acting on the policy tree. State one value judgement the analysis depends on. The aim is to flag the considerations, not to resolve them; the model cannot settle what justice requires.
+
+> **Common mistakes to avoid in the Discussion.**
+>
+> 1. *Reading a splitter as a cause.* "The tree splits on age, so age causes the treatment to work better" is wrong. The split variable is a descriptor for targeting, not an identified cause of differential response.
+> 2. *Outcome-by-outcome storytelling.* The design is outcome-wide; report the *pattern*, not four mini-stories.
+> 3. *Generalising the simulator's effect to real New Zealanders.* The simulator supports learning the workflow; it is not evidence about a real population.
+
+# Contributor Roles Taxonomy (CRediT) statement
+
+> **Write here.** Use the [CRediT taxonomy](https://credit.niso.org/) (a National Information Standards Organization (NISO) standard with fourteen contributor roles) to declare your contributions to this report. For a single-author submission, list only the roles you actually performed (not all fourteen). For joint work, list each author against their roles.
+
+*Example for a single-author report:* *Your name: Conceptualization; Methodology; Formal analysis; Writing — original draft; Writing — review & editing.*
+
+# AI disclosure statement
+
+Per the [AI use policy](https://go-bayes.github.io/epic-presentations/2026/psyc-434/assessments.html#ai-use-in-this-course) for this course: state whether AI tools (e.g., a large-language-model assistant) were used in the preparation of this report, what they were used for, and how their output was verified. If no AI tool shaped the submission in any meaningful way, state that explicitly. Replace the placeholder below with your actual disclosure.
+
+> *Example.* I used ChatGPT (GPT-X) on YYYY-MM-DD to (i) draft the first version of the abstract, and (ii) check the wording of the consistency assumption. All claims, code, and references were verified against course materials. I take full responsibility for the submitted text.
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+{{< pagebreak >}}
+
+# Appendix S1: Sample characteristics {#appendix-sample .unnumbered}
+
+```{r}
+#| label: tbl-appendix-descriptives
+#| tbl-cap: "Descriptive statistics for selected baseline and outcome variables."
+descriptives_table(panel) |>
+  mutate(across(c(mean, sd), \(x) round(x, 2))) |>
+  kable()
+```
+
+The sample contains $n = `r nrow(panel)`$ simulated units across three waves. The exposure (`r exposure_label`) is recorded at wave 1; the four wellbeing outcomes are recorded at wave 2. All continuous outcomes are z-scored by the simulator.
+
+{{< pagebreak >}}
+
+# Appendix S2: Measures {#appendix-measures .unnumbered}
+
+The simulator (`causalworkshop::simulate_nzavs_data()`) returns fictional records modelled on broad psychological-survey conventions. The plain-language descriptions below summarise what each measure is *meant to represent* in the simulator; numerical values in this report come from the simulator, not from real respondents. Replace any of these with the wording you would use in your own report.
+
+**Baseline demographics and socioeconomic.** Age (years); sex assigned at birth (binary); ethnic identification (binary); years of completed education; partnership status (binary); current employment (binary); log of annual household income; an area-level deprivation index.
+
+**Personality (Big Five).** Agreeableness, Conscientiousness, Extraversion, Neuroticism, and Openness: five short-form personality scales scored as continuous z-standardised composites in the simulator.
+
+**Exposures.** *Religious-service attendance:* a binary indicator for any reported attendance at religious services in a recent reference period. *Volunteer work:* a binary indicator for any reported volunteer work. *Community group:* a binary indicator for any reported participation in a community group (used as the Lab 9 worked example; not analysed in this report).
+
+**Outcomes (wave 2).** *Sense of purpose:* agreement that one's life has direction and meaning. *Belonging:* felt connection with one's community or family. *Self-esteem:* confidence in one's worth or abilities. *Life satisfaction:* overall evaluation of how one's life is going. All four are continuous z-standardised composites.
+
+For a re-usable measure-description database keyed to common psychological constructs, see the [`boilerplate`](https://github.com/go-bayes/boilerplate) package; it supplies citations and item-level wording that you can adapt with `boilerplate::boilerplate_generate_text()`.
+
+{{< pagebreak >}}
+
+# Appendix S3: R code {#appendix-r-code .unnumbered}
+
+The complete `setup.R` used to fit the four causal forests, the
+policy-tree workflow, and to build the tables and figures in this
+report is reproduced below.
+
+```{r}
+#| label: appendix-setup
+#| echo: false
+#| comment: ""
+#| results: asis
+cat("```r\n")
+cat(readLines("setup.R"), sep = "\n")
+cat("\n```\n")
+```

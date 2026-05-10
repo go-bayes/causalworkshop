@@ -25,7 +25,7 @@
 #'
 #' 1. **Data Simulation**: Realistic data with observed confounding and heterogeneous effects
 #' 2. **Baseline Adjustment**: Demonstrates bias reduction after controlling for measured pre-treatment confounders
-#' 3. **Causal Forests**: Estimates individual treatment effects τ(x)
+#' 3. **Causal Forests**: Estimates individual treatment effects tau(x)
 #' 4. **Targeting Analysis**: Evaluates policy targeting using Rate and Qini curves
 #' 5. **Visualization**: Creates publication-ready plots for all analyses
 #'
@@ -145,25 +145,25 @@ run_workshop <- function(n = 1000,
     cli::cli_alert_info("Key Educational Findings:")
 
     if (bias_reduction > 0) {
-      cli::cli_alert_success("✓ Baseline adjustment reduced bias by {round(bias_reduction, 3)}")
+      cli::cli_alert_success("Baseline adjustment reduced bias by {round(bias_reduction, 3)}")
     } else {
-      cli::cli_alert_warning("⚠ Baseline adjustment did not reduce bias")
+      cli::cli_alert_warning("Baseline adjustment did not reduce bias")
     }
 
     if (het_sd > 0.1) {
-      cli::cli_alert_success("✓ Substantial treatment effect heterogeneity detected (SD = {round(het_sd, 3)})")
+      cli::cli_alert_success("Substantial treatment effect heterogeneity detected (SD = {round(het_sd, 3)})")
     } else {
-      cli::cli_alert_info("○ Limited treatment effect heterogeneity (SD = {round(het_sd, 3)})")
+      cli::cli_alert_info("Limited treatment effect heterogeneity (SD = {round(het_sd, 3)})")
     }
 
     if (het_test_p < 0.05) {
-      cli::cli_alert_success("✓ Heterogeneity test significant (p = {round(het_test_p, 3)})")
+      cli::cli_alert_success("Heterogeneity test significant (p = {round(het_test_p, 3)})")
     } else {
-      cli::cli_alert_info("○ Heterogeneity test not significant (p = {round(het_test_p, 3)})")
+      cli::cli_alert_info("Heterogeneity test not significant (p = {round(het_test_p, 3)})")
     }
 
     if (include_targeting && het_sd > 0.1) {
-      cli::cli_alert_success("✓ Targeting analysis indicates potential for policy differentiation")
+      cli::cli_alert_success("Targeting analysis indicates potential for policy differentiation")
     }
 
     cli::cli_rule("Workshop Complete")

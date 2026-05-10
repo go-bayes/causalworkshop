@@ -1,0 +1,25 @@
+project:
+  type: default
+  output-dir: _output
+
+format:
+  pdf:
+    pdf-engine: lualatex
+    toc: true
+    number-sections: true
+    fig-pos: H
+    geometry:
+      - margin=2.5cm
+    documentclass: article
+    fontsize: 11pt
+  html:
+    toc: true
+    number-sections: true
+
+bibliography: references.bib
+link-citations: true
+
+execute:
+  echo: true
+  warning: false
+  message: false

@@ -21,14 +21,12 @@
 #' - 07-grf-style-simulation.R: Advanced data generator (GRF-style benchmark)
 #'
 #' @examples
-#' # Copy scripts to default location
-#' get_workshop_scripts()
+#' # Copy scripts to a temporary directory
+#' scripts_dir <- file.path(tempdir(), "workshop-scripts")
+#' get_workshop_scripts(scripts_dir)
 #'
-#' # Copy scripts to specific directory
-#' get_workshop_scripts("my-workshop")
-#'
-#' # Overwrite existing scripts
-#' get_workshop_scripts(overwrite = TRUE)
+#' # List the scripts included in the package
+#' list_workshop_scripts()
 #'
 #' @export
 get_workshop_scripts <- function(dest_dir = "workshop-scripts", overwrite = FALSE) {

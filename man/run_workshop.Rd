@@ -44,7 +44,7 @@ This function provides a complete educational workflow covering:
 \enumerate{
 \item \strong{Data Simulation}: Realistic data with observed confounding and heterogeneous effects
 \item \strong{Baseline Adjustment}: Demonstrates bias reduction after controlling for measured pre-treatment confounders
-\item \strong{Causal Forests}: Estimates individual treatment effects τ(x)
+\item \strong{Causal Forests}: Estimates individual treatment effects tau(x)
 \item \strong{Targeting Analysis}: Evaluates policy targeting using Rate and Qini curves
 \item \strong{Visualization}: Creates publication-ready plots for all analyses
 }

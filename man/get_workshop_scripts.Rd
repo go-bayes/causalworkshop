@@ -33,13 +33,11 @@ This function copies the complete set of workshop scripts:
 }
 }
 \examples{
-# Copy scripts to default location
-get_workshop_scripts()
+# Copy scripts to a temporary directory
+scripts_dir <- file.path(tempdir(), "workshop-scripts")
+get_workshop_scripts(scripts_dir)
 
-# Copy scripts to specific directory
-get_workshop_scripts("my-workshop")
-
-# Overwrite existing scripts
-get_workshop_scripts(overwrite = TRUE)
+# List the scripts included in the package
+list_workshop_scripts()
 
 }

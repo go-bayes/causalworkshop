@@ -47,7 +47,7 @@ treatment effects (CATE) and test for treatment effect heterogeneity.
 This function demonstrates the core workflow for causal forest analysis:
 \enumerate{
 \item Fits a causal forest using honest sample splitting
-\item Predicts individual treatment effects τ(x)
+\item Predicts individual treatment effects tau(x)
 \item Tests for significant treatment effect heterogeneity
 \item Calculates variable importance for effect modification
 \item Provides interpretation of results
@@ -67,11 +67,13 @@ results$heterogeneity_stats
 # View variable importance
 results$variable_importance
 
-# Use custom parameters
+\dontrun{
+# Use custom parameters with your own data
 results <- workshop_causal_forest(
   data = my_data,
   num_trees = 2000,
   outcome_var = "volunteer_outcome"
 )
+}
 
 }

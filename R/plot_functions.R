@@ -193,8 +193,8 @@ plot_heterogeneity_distribution <- function(data, tau_var = "tau_hat",
     ggplot2::geom_vline(xintercept = mean_tau, color = "red", linetype = "dashed", size = 1) +
     ggplot2::labs(
       title = title,
-      subtitle = glue::glue("Mean τ(x): {round(mean_tau, 3)}, SD: {round(sd_tau, 3)}"),
-      x = "Predicted Treatment Effect τ(x)",
+      subtitle = glue::glue("Mean tau(x): {round(mean_tau, 3)}, SD: {round(sd_tau, 3)}"),
+      x = "Predicted Treatment Effect tau(x)",
       y = "Count",
       caption = "Red line shows average treatment effect"
     ) +

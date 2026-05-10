@@ -8,7 +8,7 @@ An R package for teaching causal inference with machine learning. Provides simul
 
 ## Installation
 
-Requires R >= 4.0.
+Requires R >= 4.1.
 
 ```r
 # install from GitHub
@@ -111,6 +111,16 @@ Scripts 05 and 06 require the `margot` package:
 devtools::install_github("go-bayes/margot")
 ```
 
+## PSYC 434 report template
+
+The package also bundles the Option A research-report template used in PSYC 434. It fits the four-outcome causal-forest and policy-tree workflow from `setup.R`, then caches the fitted object locally so later renders can reuse it.
+
+```r
+get_report_template()
+```
+
+Open the copied `research-report-template` folder, edit `setup.R`, then render `manuscript.qmd`.
+
 ## Citation
 
 ```r
@@ -119,7 +129,7 @@ citation("causalworkshop")
 
 ```
 Bulbulia, J.A. (2026). causalworkshop: Educational Package for Causal Inference
-  with Machine Learning. R package version 0.3.0.
+  with Machine Learning. R package version 0.6.3.
   https://github.com/go-bayes/causalworkshop
 ```
 

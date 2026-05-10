@@ -135,15 +135,14 @@ test_that("nonlinear data -> compare_ate_methods -> forest beats OLS on RMSE", {
 
 test_that("measurement items -> lavaan CFA fits without error", {
   skip_on_cran()
-  skip_if_not_installed("lavaan")
+  skip_if_lavaan_unavailable()
 
   d <- simulate_measurement_items(n = 1000, seed = 2026)
 
   model <- "distress =~ item_1 + item_2 + item_3 + item_4 + item_5 + item_6"
 
-  expect_no_error({
-    fit <- lavaan::cfa(model, data = d)
-  })
+  fit <- NULL
+  expect_no_error(fit <- lavaan::cfa(model, data = d))
 
   # check that fit converged
   expect_true(lavaan::lavInspect(fit, "converged"))

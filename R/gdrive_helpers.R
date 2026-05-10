@@ -1,8 +1,8 @@
 # private helpers shared by load_policy_learning_cache() and load_report_workflow_cache().
 # extract a Google Drive file ID from a share URL and download a public
-# file via googledrive's authenticated-but-deauthed flow, which handles
+# data object via googledrive's authenticated-but-deauthed flow, which handles
 # the virus-scan confirmation page that trips simple curl downloads on
-# zips larger than ~25 MB.
+# large Drive-hosted objects.
 
 .ensure_arrow_stack <- function() {
   for (pkg in c("arrow", "qs2", "margot")) {
@@ -23,7 +23,7 @@
     stop(
       "the URL points at a Google Drive *folder*, not a *file*:\n  ",
       share_url,
-      "\nopen Drive in a browser, right-click the cache zip ",
+      "\nopen Drive in a browser, right-click the data object ",
       "(not the parent folder), choose Get link > Anyone with the link > ",
       "Viewer, and paste THAT URL. it should look like\n",
       "  https://drive.google.com/file/d/<FILE_ID>/view?usp=sharing"
@@ -44,7 +44,12 @@
 
 .gdrive_download <- function(file_id, dest) {
   if (!requireNamespace("googledrive", quietly = TRUE)) {
-    install.packages("googledrive")
+    stop(
+      "package 'googledrive' is required to download cache files. ",
+      "The cache link points to a large Google Drive data object, ",
+      "so the package uses googledrive's deauthorised download flow. ",
+      "Install it with install.packages('googledrive')."
+    )
   }
   suppressMessages(googledrive::drive_deauth())
   googledrive::drive_download(

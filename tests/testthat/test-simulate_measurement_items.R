@@ -95,7 +95,7 @@ test_that("intercept non-invariance is present in attributes", {
 })
 
 test_that("1-factor CFA fits well", {
-  skip_if_not_installed("lavaan")
+  skip_if_lavaan_unavailable()
 
   d <- simulate_measurement_items(n = 2000, seed = 2026)
 
@@ -108,7 +108,7 @@ test_that("1-factor CFA fits well", {
 })
 
 test_that("full scalar invariance fails, partial invariance holds", {
-  skip_if_not_installed("lavaan")
+  skip_if_lavaan_unavailable()
 
   d <- simulate_measurement_items(n = 2000, seed = 2026)
 

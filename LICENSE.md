@@ -41,8 +41,7 @@ To view a copy of this license, visit: https://creativecommons.org/licenses/by-s
 If you use this package in academic work, please cite:
 
 ```
-Bulbulia, J.A. (2025). causalworkshop: Educational Package for Causal Inference 
-  with Machine Learning. R package version 0.1.0. 
+Bulbulia, J.A. (2026). causalworkshop: Educational Package for Causal Inference
+  with Machine Learning. R package version 0.6.2.
   https://github.com/go-bayes/causalworkshop
 ```
-

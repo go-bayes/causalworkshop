@@ -32,11 +32,16 @@
   d1 <- dplyr::filter(d, .data$wave == 1)
   d2 <- dplyr::filter(d, .data$wave == 2)
 
+  outcome_short_names <- c(
+    "purpose", "belonging", "self_esteem", "life_satisfaction"
+  )
+
   covariate_cols <- c(
     "age", "male", "nz_european", "education", "partner", "employed",
     "log_income", "nz_dep", "agreeableness", "conscientiousness",
     "extraversion", "neuroticism", "openness",
-    exposure, "purpose"
+    exposure,
+    outcome_short_names
   )
 
   exposure_t1 <- paste0(exposure, "_t1")
@@ -63,7 +68,7 @@
     "t2_purpose", "t2_belonging", "t2_self_esteem", "t2_life_satisfaction"
   )
   label_mapping <- list(
-    model_t2_purpose = "Sense of Purpose",
+    model_t2_purpose = "Sense of purpose",
     model_t2_belonging = "Belonging",
     model_t2_self_esteem = "Self-esteem",
     model_t2_life_satisfaction = "Life satisfaction"
@@ -76,7 +81,7 @@
   )
 
   message(
-    "fitting locally — expect ~10-25 min on an M-series laptop ",
+    "fitting locally; expect ~10-25 min on an M-series laptop ",
     "(num.trees = ", num_trees, ", n_iterations = ", n_iterations, ")"
   )
 

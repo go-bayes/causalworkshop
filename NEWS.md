@@ -1,3 +1,15 @@
+# causalworkshop 0.6.3
+
+## Package health and report template
+
+* Fix runnable examples and portability issues so `R CMD check` is clean.
+* Bundle the PSYC 434 Option A report template and add
+  `get_report_template()` to copy it into a local project.
+* Align the local report workflow adjustment set with the student template:
+  baseline exposure plus all four baseline outcomes.
+* Stop package code from trying to install `googledrive` automatically; cache
+  downloads now fail with installation guidance instead.
+
 # causalworkshop 0.6.2
 
 ## Workflow naming

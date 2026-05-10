@@ -36,7 +36,7 @@ Refits the policy-learning multi-outcome causal forest,
 policy-tree stability check, and policy workflow on the caller's machine, returning the
 same list shape as \code{\link[=load_policy_learning_cache]{load_policy_learning_cache()}}. Use this when you would
 rather not deserialise the author's pre-fitted artefacts from Google
-Drive — for example, if you would prefer not to run
+Drive, for example, if you would prefer not to run
 \code{\link[qs2:qs_deserialize]{qs2::qs_deserialize()}} on a third-party blob, or you want to test a
 local change to the simulator.
 }
